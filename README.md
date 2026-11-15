@@ -18,10 +18,11 @@
 **[Live Application](https://YOUR-SITE.netlify.app) · [Pipeline Guide](pipeline/00_README.md) · [References](REFERENCES.md) · [Report a bug](../../issues)**
 
 ━━━━━━━━━━━━━━━━━━━━ ✦ ━━━━━━━━━━━━━━━━━━━━
+<img src="assets/opening.jpg" alt="FASAL opening scene">
 
 </div>
 
-## 🛰️ At a Glance
+## 🟣 At a Glance
 
 - **Real NISAR on the hero site**: Punjab runs on NISAR GCOV acquisitions; Larkana and Tharparkar remain labelled illustrative demo data
 - **Honest by design**: whether data is real or demo is a field in the data files (`data_mode`). The banner, the frame stamps and the Field Record label all read it; nothing is hard-coded in the interface
@@ -34,7 +35,7 @@
 
 <br/>
 
-## 🛰️ Overview
+## 🟣 Overview
 
 In rice-wheat farming regions, food output depends on cropping intensity (one crop or two per year) and on the timing between crops, yet many smallholder communities have no independent record of either. L-band SAR sees through monsoon cloud, day or night, and responds to flooding, surface roughness and vegetation structure, so it can reveal the seasonal rhythm of fields when optical satellites cannot.
 
@@ -52,7 +53,7 @@ Built solo by **Team Sitaara** for the 2026 NASA Space Apps Challenge, **"Dancin
 
 <br/>
 
-## 🛰️ Data Status
+## 🟣 Data Status
 
 | Mode | Source | Where it is labelled |
 |---|---|---|
@@ -64,7 +65,7 @@ Built solo by **Team Sitaara** for the 2026 NASA Space Apps Challenge, **"Dancin
 
 <br/>
 
-## 🛰️ How FASAL Addresses the Challenge
+## 🟣 How FASAL Addresses the Challenge
 
 | Criterion | What the project does |
 |---|---|
@@ -76,7 +77,7 @@ Built solo by **Team Sitaara** for the 2026 NASA Space Apps Challenge, **"Dancin
 
 <br/>
 
-## 🛰️ Sites
+## 🟣 Sites
 
 | Site | Landscape | Story | Cultural marker | Role |
 |---|---|---|---|---|
@@ -87,7 +88,7 @@ Built solo by **Team Sitaara** for the 2026 NASA Space Apps Challenge, **"Dancin
 
 <br/>
 
-## 🛰️ Experience
+## 🟣 Experience
 
 | Scene | What it does |
 |---|---|
@@ -100,13 +101,13 @@ Built solo by **Team Sitaara** for the 2026 NASA Space Apps Challenge, **"Dancin
 
 <div align="center">
 
-<img src="assets/opening.png" width="480" alt="FASAL opening scene">&nbsp;<img src="assets/field-record.png" width="480" alt="FASAL printable Field Record">
+<img src="assets/field-record.jpg" alt="FASAL">
 
 </div>
 
 <br/>
 
-## 🛰️ Science Logic
+## 🟣 Science Logic
 
 Backscatter is read per polarization in dB. For each sample polygon the pipeline takes the mean in **linear power**, converts to dB, then reports the **median across polygons** with a 25th to 75th percentile band. A 3-point moving median and a Savitzky-Golay filter (window 5, order 2) smooth the median series before simple rules run. All thresholds live in `pipeline/config.yaml`.
 
@@ -122,7 +123,7 @@ Backscatter is read per polarization in dB. For each sample polygon the pipeline
 
 <br/>
 
-## 🛰️ Engineering Highlights
+## 🟣 Engineering Highlights
 
 - **One source of truth for labels**: the demo banner, frame stamps and Field Record band are generated from `data_mode` and `source` in the JSON, so a site cannot silently change status
 - **Config-driven HDF5 extraction**: `03_inspect_h5.py` prints the real file tree and suggests config values; `04` stops with a precise message if a path is wrong
@@ -135,7 +136,7 @@ Backscatter is read per polarization in dB. For each sample polygon the pipeline
 
 <br/>
 
-## 🛰️ Tech Stack
+## 🟣 Tech Stack
 
 | Layer | Tools |
 |---|---|
@@ -152,7 +153,7 @@ Backscatter is read per polarization in dB. For each sample polygon the pipeline
 
 <br/>
 
-## 🛰️ Data Pipeline
+## 🟣 Data Pipeline
 
 | Script | Purpose |
 |---|---|
@@ -168,7 +169,7 @@ Backscatter is read per polarization in dB. For each sample polygon the pipeline
 
 <br/>
 
-## 🛰️ Project Structure
+## 🟣 Project Structure
 
 ```
 fasal/
@@ -194,7 +195,7 @@ fasal/
 
 <br/>
 
-## 🛰️ Getting Started
+## 🟣 Getting Started
 
 Runs in DEMO mode with no downloads:
 
@@ -214,7 +215,7 @@ npm run build      # static site in dist/
 
 <br/>
 
-## 🛰️ Using Real NISAR Data
+## 🟣 Using Real NISAR Data
 
 ```bash
 pip install asf_search h5py pyproj pandas tqdm
@@ -232,13 +233,13 @@ Punjab was produced with exactly these steps; its HDF5 paths in `config.yaml` we
 
 <br/>
 
-## 🛰️ Add a Historical Map
+## 🟣 Add a Historical Map
 
 Drop a verified public-domain image at `public/maps/<site>.jpg` and fill in its entry in `public/maps/maps.json` (`title`, `year`, `source_url`, `license`, `verified`). Suggested places to search: Library of Congress, David Rumsey Map Collection, Wikimedia Commons and the British Library. Verify each license yourself. Until a map is added, Map Memory shows an "Add a public-domain map" panel.
 
 <br/>
 
-## 🛰️ Limitations
+## 🟣 Limitations
 
 - **Revisit gaps**: short events can fall between acquisitions
 - **Speckle**: averaging inside a field reduces it but does not remove it
@@ -250,25 +251,25 @@ Drop a verified public-domain image at `public/maps/<site>.jpg` and fill in its 
 
 <br/>
 
-## 🛰️ Future Directions
+## 🟣 Future Directions
 
 Directions, not claims: more sites and years, comparison with field observations, testing which polarizations best separate flooding, growth and harvest, and extending the Field Record into a simple per-community yearly record. Food-security figures are deliberately omitted until they can be cited.
 
 <br/>
 
-## 🛰️ Deployment
+## 🟣 Deployment
 
 Static build, auto-deployed from `main` on **Netlify**: build command `npm run build`, publish directory `dist`. The relative base path (`./`) also works on GitHub Pages, Vercel, Cloudflare Pages and any file host. Generated demo data in `public/data/` is committed so the deployed site runs with no pipeline step.
 
 <br/>
 
-## 🛰️ AI Assistance
+## 🟣 AI Assistance
 
 Developed with assistance from Claude (Anthropic) for ideation, research, data-analysis design, and drafting and debugging code and text, including the web app, the Python pipeline and the synthetic demo-data generator. The author reviewed, tested and edited the result. The demo data is synthetic and labelled as such. No image- or audio-generation tools were used, and no NASA logos or branding appear.
 
 <br/>
 
-## 🛰️ References
+## 🟣 References
 
 NISAR, ASF DAAC, every library and font, the story sources and the open items are listed in [`REFERENCES.md`](REFERENCES.md).
 
