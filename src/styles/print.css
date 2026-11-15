@@ -1,0 +1,9 @@
+@page { size: A4; margin: 12mm; }
+@media print {
+  html, body, #root { height: auto !important; overflow: visible !important; background: #fff !important; }
+  .layer, .scene { position: static !important; overflow: visible !important; }
+  body * { visibility: hidden; }
+  .field-record, .field-record * { visibility: visible; }
+  .field-record { position: absolute; left: 0; top: 0; width: 100%; box-shadow: none !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .no-print, .global-banner { display: none !important; }
+}

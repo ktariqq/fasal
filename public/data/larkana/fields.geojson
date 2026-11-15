@@ -1,0 +1,141 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "L1",
+    "site_id": "larkana"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       68.177,
+       27.482
+      ],
+      [
+       68.183,
+       27.482
+      ],
+      [
+       68.183,
+       27.488
+      ],
+      [
+       68.177,
+       27.488
+      ],
+      [
+       68.177,
+       27.482
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "L2",
+    "site_id": "larkana"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       68.217,
+       27.487
+      ],
+      [
+       68.223,
+       27.487
+      ],
+      [
+       68.223,
+       27.493
+      ],
+      [
+       68.217,
+       27.493
+      ],
+      [
+       68.217,
+       27.487
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "L3",
+    "site_id": "larkana"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       68.182,
+       27.517
+      ],
+      [
+       68.188,
+       27.517
+      ],
+      [
+       68.188,
+       27.523
+      ],
+      [
+       68.182,
+       27.523
+      ],
+      [
+       68.182,
+       27.517
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "L4",
+    "site_id": "larkana"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       68.222,
+       27.517
+      ],
+      [
+       68.228,
+       27.517
+      ],
+      [
+       68.228,
+       27.523
+      ],
+      [
+       68.222,
+       27.523
+      ],
+      [
+       68.222,
+       27.517
+      ]
+     ]
+    ]
+   }
+  }
+ ]
+}

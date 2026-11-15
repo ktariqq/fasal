@@ -1,0 +1,26 @@
+.mm { padding-top: 34px; }
+.mm-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; padding: 8px 16px; position: relative; z-index: 1; }
+.mm-top h1 { font-size: clamp(16px, 2.2vw, 24px); letter-spacing: 0.12em; color: var(--mist); text-shadow: var(--glow); }
+.mm-nav { display: flex; flex-wrap: wrap; gap: 8px; }
+.mm-body { position: relative; z-index: 1; width: min(780px, 100%); margin: 6px auto 40px; padding: 0 12px; }
+.mm-intro { font-family: var(--f-alt); font-size: 19px; color: var(--lavender); margin: 0 0 12px; }
+.mm-frame { padding: 22px 22px 16px; border: 3px double var(--brass-dim); box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6); }
+.mm-pick { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 10px; font-family: var(--f-mono); font-size: 12px; }
+.mm-pick select { font: inherit; padding: 4px 8px; background: var(--parchment); color: var(--ink); border: 1px solid var(--brass-dim); border-radius: 4px; }
+.swipe { position: relative; width: 100%; aspect-ratio: 1; overflow: hidden; background: #000; border: 2px solid var(--ink); touch-action: none; user-select: none; cursor: ew-resize; }
+.sw-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.sw-tag { position: absolute; top: 8px; max-width: 46%; padding: 3px 8px; font-family: var(--f-mono); font-size: 11px; background: rgba(11, 5, 20, 0.82); color: var(--mist); border: 1px solid var(--brass-dim); pointer-events: none; }
+.sw-l { left: 8px; }
+.sw-r { right: 8px; }
+.sw-handle { position: absolute; top: 0; bottom: 0; width: 44px; margin-left: -22px; cursor: ew-resize; }
+.sw-handle::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 3px; margin-left: -1.5px; background: var(--lavender); box-shadow: 0 0 10px var(--rebecca), 0 0 2px #000; }
+.sw-grip { position: absolute; left: 50%; top: 50%; width: 40px; height: 40px; margin: -20px 0 0 -20px; display: grid; place-items: center; border-radius: 50%; background: var(--rebecca); color: #fff; border: 2px solid var(--brass); box-shadow: var(--glow); }
+.mm-cap { margin: 12px 2px 0; font-size: 15px; line-height: 1.45; }
+.mm-cap strong { font-family: var(--f-cinzel); font-size: 16px; }
+.mm-cap .mono { font-family: var(--f-mono); font-size: 12px; }
+.mm-cap a { color: var(--rebecca-deep); }
+.mm-empty { padding: 26px 28px; border: 3px double var(--brass-dim); box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6); }
+.mm-empty h2 { font-size: 22px; color: var(--rebecca-deep); }
+.mm-empty ol { padding-left: 22px; }
+.mm-empty li { margin: 6px 0; }
+.mm-empty code { font-family: var(--f-mono); font-size: 13px; background: rgba(42, 26, 58, 0.12); padding: 1px 5px; border-radius: 3px; }

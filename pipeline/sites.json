@@ -1,0 +1,32 @@
+[
+ {"id": "punjab", "name": "Central Punjab Rice-Wheat Belt", "name_ur": "وسطی پنجاب", "region": "Kala Shah Kaku / Sheikhupura, Punjab",
+  "center": [74.30, 31.73], "bbox": [74.247, 31.685, 74.353, 31.775], "story_id": "heer-ranjha",
+  "cultural": [{"id": "baisakhi", "label": "Baisakhi", "label_ur": "بیساکھی", "rule": "fixed", "month": 4, "day": 14,
+    "description": "Spring harvest festival and Punjabi solar new year, traditionally observed on 13 or 14 April, when wheat harvesting is traditionally associated with beginning in Punjab.",
+    "source": "CITATION_NEEDED: add a reference URL for the Baisakhi date and harvest association; confirm the exact day for each year"}],
+  "fields": [
+   {"id": "P1", "ring": [[74.277, 31.712], [74.283, 31.712], [74.283, 31.718], [74.277, 31.718], [74.277, 31.712]]},
+   {"id": "P2", "ring": [[74.317, 31.707], [74.323, 31.707], [74.323, 31.713], [74.317, 31.713], [74.317, 31.707]]},
+   {"id": "P3", "ring": [[74.282, 31.747], [74.288, 31.747], [74.288, 31.753], [74.282, 31.753], [74.282, 31.747]]},
+   {"id": "P4", "ring": [[74.322, 31.742], [74.328, 31.742], [74.328, 31.748], [74.322, 31.748], [74.322, 31.742]]}]},
+ {"id": "larkana", "name": "Larkana and Mohenjo-daro", "name_ur": "لاڑکانہ اور موہنجو دڑو", "region": "Larkana, Sindh",
+  "center": [68.20, 27.50], "bbox": [68.149, 27.455, 68.251, 27.545], "story_id": "sassui-punnhun",
+  "cultural": [{"id": "sindhi-culture-day", "label": "Sindhi Culture Day", "label_ur": "سندھی ثقافت کا دن", "rule": "first_sunday", "month": 12,
+    "description": "Annual celebration of Sindhi heritage, observed on the first Sunday of December. Not an agricultural event; shown for local context only.",
+    "source": "CITATION_NEEDED: add a reference URL and verify the observance date"}],
+  "fields": [
+   {"id": "L1", "ring": [[68.177, 27.482], [68.183, 27.482], [68.183, 27.488], [68.177, 27.488], [68.177, 27.482]]},
+   {"id": "L2", "ring": [[68.217, 27.487], [68.223, 27.487], [68.223, 27.493], [68.217, 27.493], [68.217, 27.487]]},
+   {"id": "L3", "ring": [[68.182, 27.517], [68.188, 27.517], [68.188, 27.523], [68.182, 27.523], [68.182, 27.517]]},
+   {"id": "L4", "ring": [[68.222, 27.517], [68.228, 27.517], [68.228, 27.523], [68.222, 27.523], [68.222, 27.517]]}]},
+ {"id": "thar", "name": "Tharparkar", "name_ur": "تھرپارکر", "region": "Tharparkar, Sindh",
+  "center": [69.80, 24.70], "bbox": [69.750, 24.655, 69.850, 24.745], "story_id": "umar-marvi",
+  "cultural": [{"id": "sindhi-culture-day", "label": "Sindhi Culture Day", "label_ur": "سندھی ثقافت کا دن", "rule": "first_sunday", "month": 12,
+    "description": "Annual celebration of Sindhi heritage, observed on the first Sunday of December. Not an agricultural event; shown for local context only.",
+    "source": "CITATION_NEEDED: add a reference URL and verify the observance date"}],
+  "fields": [
+   {"id": "T1", "ring": [[69.777, 24.682], [69.783, 24.682], [69.783, 24.688], [69.777, 24.688], [69.777, 24.682]]},
+   {"id": "T2", "ring": [[69.817, 24.687], [69.823, 24.687], [69.823, 24.693], [69.817, 24.693], [69.817, 24.687]]},
+   {"id": "T3", "ring": [[69.782, 24.717], [69.788, 24.717], [69.788, 24.723], [69.782, 24.723], [69.782, 24.717]]},
+   {"id": "T4", "ring": [[69.822, 24.717], [69.828, 24.717], [69.828, 24.723], [69.822, 24.723], [69.822, 24.717]]}]}
+]

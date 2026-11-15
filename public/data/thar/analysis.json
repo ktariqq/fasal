@@ -1,0 +1,25 @@
+{
+ "cropping_intensity": {
+  "allowed": true,
+  "estimate": 1,
+  "polarization": "HH",
+  "n_acquisitions": 36,
+  "span_days": 420,
+  "peaks_in_window": [
+   "2025-09-11"
+  ],
+  "message": "1 prominent backscatter peak(s) in the first 365 days; consistent with 1 crop cycle(s) per year if each peak is a crop canopy. Estimate only: no ground truth, and edge effects are possible.",
+  "reason": ""
+ },
+ "gaps": [],
+ "polarization": "HH",
+ "parameters": {
+  "prom": 2.0,
+  "min_dates": 20,
+  "min_span": 365,
+  "abrupt": 3.0,
+  "onset": 1.0,
+  "low_q": 0.25
+ },
+ "n_acquisitions": 36
+}

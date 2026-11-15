@@ -1,0 +1,141 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "P1",
+    "site_id": "punjab"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       74.277,
+       31.712
+      ],
+      [
+       74.283,
+       31.712
+      ],
+      [
+       74.283,
+       31.718
+      ],
+      [
+       74.277,
+       31.718
+      ],
+      [
+       74.277,
+       31.712
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "P2",
+    "site_id": "punjab"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       74.317,
+       31.707
+      ],
+      [
+       74.323,
+       31.707
+      ],
+      [
+       74.323,
+       31.713
+      ],
+      [
+       74.317,
+       31.713
+      ],
+      [
+       74.317,
+       31.707
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "P3",
+    "site_id": "punjab"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       74.282,
+       31.747
+      ],
+      [
+       74.288,
+       31.747
+      ],
+      [
+       74.288,
+       31.753
+      ],
+      [
+       74.282,
+       31.753
+      ],
+      [
+       74.282,
+       31.747
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "P4",
+    "site_id": "punjab"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       74.322,
+       31.742
+      ],
+      [
+       74.328,
+       31.742
+      ],
+      [
+       74.328,
+       31.748
+      ],
+      [
+       74.322,
+       31.748
+      ],
+      [
+       74.322,
+       31.742
+      ]
+     ]
+    ]
+   }
+  }
+ ]
+}

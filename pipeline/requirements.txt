@@ -1,0 +1,11 @@
+# Demo path needs only: numpy scipy pillow pyyaml
+# Dropped as unnecessary: rasterio, geopandas, matplotlib, shapely (masking is done with pyproj + PIL)
+asf_search>=10.1
+h5py
+numpy
+scipy
+pillow
+pyproj
+pandas
+tqdm
+pyyaml

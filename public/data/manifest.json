@@ -1,0 +1,85 @@
+{
+ "project": "FASAL",
+ "data_mode": "mixed",
+ "generated_at": "2026-11-15T16:27:10+00:00",
+ "sites": [
+  {
+   "id": "punjab",
+   "name": "Central Punjab Rice-Wheat Belt",
+   "name_ur": "وسطی پنجاب",
+   "bbox": [
+    74.247,
+    31.685,
+    74.353,
+    31.775
+   ],
+   "center": [
+    74.3,
+    31.73
+   ],
+   "story_id": "heer-ranjha",
+   "cultural_event_ids": [
+    "baisakhi-2026"
+   ],
+   "data_mode": "real",
+   "sensor": "NISAR L-band GCOV",
+   "n_acquisitions": 2,
+   "date_range": [
+    "2025-10-26",
+    "2026-09-24"
+   ]
+  },
+  {
+   "id": "larkana",
+   "name": "Larkana and Mohenjo-daro",
+   "name_ur": "لاڑکانہ اور موہنجو دڑو",
+   "bbox": [
+    68.149,
+    27.455,
+    68.251,
+    27.545
+   ],
+   "center": [
+    68.2,
+    27.5
+   ],
+   "story_id": "sassui-punnhun",
+   "cultural_event_ids": [
+    "sindhi-culture-day-2025"
+   ],
+   "data_mode": "demo",
+   "sensor": "SYNTHETIC (illustrative demo)",
+   "n_acquisitions": 36,
+   "date_range": [
+    "2025-07-01",
+    "2026-08-25"
+   ]
+  },
+  {
+   "id": "thar",
+   "name": "Tharparkar",
+   "name_ur": "تھرپارکر",
+   "bbox": [
+    69.75,
+    24.655,
+    69.85,
+    24.745
+   ],
+   "center": [
+    69.8,
+    24.7
+   ],
+   "story_id": "umar-marvi",
+   "cultural_event_ids": [
+    "sindhi-culture-day-2025"
+   ],
+   "data_mode": "demo",
+   "sensor": "SYNTHETIC (illustrative demo)",
+   "n_acquisitions": 36,
+   "date_range": [
+    "2025-07-01",
+    "2026-08-25"
+   ]
+  }
+ ]
+}

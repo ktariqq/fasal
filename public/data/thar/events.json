@@ -1,0 +1,57 @@
+[
+ {
+  "id": "sig-low-2025-07-01",
+  "date": "2025-07-01",
+  "type": "signal",
+  "label": "Sustained low backscatter",
+  "label_ur": "",
+  "description": "HH stays in the lowest quarter of its range from 2025-07-01 to 2025-07-13 (2 acquisitions) in the Jun-Sep window. Consistent with standing water or a smooth bare surface; not confirmed.",
+  "source": "FASAL rule-based hint on HH median (pipeline/common.py); a hypothesis, not ground truth",
+  "confidence": "low",
+  "citation_needed": false
+ },
+ {
+  "id": "sig-rise-2025-07-25",
+  "date": "2025-07-25",
+  "type": "signal",
+  "label": "Backscatter rise",
+  "label_ur": "",
+  "description": "HH climbs 1.0 dB or more above its preceding minimum (-20.1 dB) and stays up. Consistent with canopy growth or field preparation; not confirmed.",
+  "source": "FASAL rule-based hint on HH median (pipeline/common.py); a hypothesis, not ground truth",
+  "confidence": "medium",
+  "citation_needed": false
+ },
+ {
+  "id": "sig-peak-2025-09-11",
+  "date": "2025-09-11",
+  "type": "signal",
+  "label": "Backscatter maximum",
+  "label_ur": "",
+  "description": "Local maximum of -14.3 dB, 5.8 dB above the preceding minimum. Consistent with a canopy near full development; not confirmed.",
+  "source": "FASAL rule-based hint on HH median (pipeline/common.py); a hypothesis, not ground truth",
+  "confidence": "medium",
+  "citation_needed": false
+ },
+ {
+  "id": "sindhi-culture-day-2025",
+  "date": "2025-12-07",
+  "type": "cultural",
+  "label": "Sindhi Culture Day",
+  "label_ur": "سندھی ثقافت کا دن",
+  "description": "Annual celebration of Sindhi heritage, observed on the first Sunday of December. Not an agricultural event; shown for local context only.",
+  "source": "CITATION_NEEDED: add a reference URL and verify the observance date",
+  "confidence": "n/a",
+  "citation_needed": true
+ },
+ {
+  "id": "sig-low-2026-06-02",
+  "date": "2026-06-02",
+  "type": "signal",
+  "label": "Sustained low backscatter",
+  "label_ur": "",
+  "description": "HH stays in the lowest quarter of its range from 2026-06-02 to 2026-07-08 (4 acquisitions) in the Jun-Sep window. Consistent with standing water or a smooth bare surface; not confirmed.",
+  "source": "FASAL rule-based hint on HH median (pipeline/common.py); a hypothesis, not ground truth",
+  "confidence": "low",
+  "citation_needed": false
+ }
+]

@@ -1,0 +1,23 @@
+{
+ "cropping_intensity": {
+  "allowed": false,
+  "estimate": null,
+  "polarization": "HH",
+  "n_acquisitions": 2,
+  "span_days": 333,
+  "peaks_in_window": [],
+  "message": "Insufficient dates for cropping-intensity estimate.",
+  "reason": "2 acquisitions spanning 333 days; the rule needs at least 20 acquisitions covering at least 365 days."
+ },
+ "gaps": [],
+ "polarization": "HH",
+ "parameters": {
+  "prom": 2.0,
+  "min_dates": 20,
+  "min_span": 365,
+  "abrupt": 3.0,
+  "onset": 1.0,
+  "low_q": 0.25
+ },
+ "n_acquisitions": 2
+}
