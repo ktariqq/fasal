@@ -15,7 +15,7 @@
 ![Event](https://img.shields.io/badge/NASA_Space_Apps-2026-6d28d9?style=flat-square&labelColor=231134)
 ![License](https://img.shields.io/badge/License-MIT-6d28d9?style=flat-square&labelColor=231134)
 
-**[Live Application](https://YOUR-SITE.netlify.app) · [Pipeline Guide](pipeline/00_README.md) · [References](REFERENCES.md) · [Report a bug](../../issues)**
+**[Live Application](https://fasal-nasa-spaceapps.netlify.app/) · [Pipeline Guide](pipeline/00_README.md) · [References](REFERENCES.md) · [Report a bug](../../issues)**
 
 ━━━━━━━━━━━━━━━━━━━━ ✦ ━━━━━━━━━━━━━━━━━━━━
 <img src="assets/opening.jpg" alt="FASAL opening scene">
@@ -73,7 +73,7 @@ Built solo by **Team Sitaara** for the 2026 NASA Space Apps Challenge, **"Dancin
 | **Creativity** | An astro-cartographic "antique observatory" interface drawn entirely in code; sonification of backscatter ("Earth's Choir"); folk tales and a festival calendar on the radar timeline; a historical-map swipe |
 | **Validity** | Transparent rules in code and in a "How to read this" panel; every interpretation phrased as a hypothesis; the acquisition count always shown; cropping intensity gated by data length; a Limits panel; `CITATION_NEEDED` markers wherever a source is owed; no HDF5 layout assumed; real and demo sites are labelled separately in the same app |
 | **Relevance** | NASA-ISRO NISAR L2 GCOV backscatter from the ASF DAAC is the core data on the hero site (per-field dB, polarization comparison, time series). Two further sites carry labelled demo data that exercise the same pipeline and interface |
-| **Presentation** | A cinematic opening, a guided atlas, print-ready Field Records, keyboard and screen-reader support, reduced-motion support, plus a 7-slide deck and a 30-second video script in the repo |
+| **Presentation** | A cinematic opening, a guided atlas, print-ready Field Records, keyboard and screen-reader support, and reduced-motion support |
 
 <br/>
 
@@ -187,8 +187,6 @@ fasal/
 │   ├── store/           # Zustand store
 │   └── styles/          # theme, site, map, record, print
 ├── assets/              # README screenshots
-├── slides/              # 7-slide outline with speaker notes
-├── video/               # 30-second video shot list
 ├── REFERENCES.md
 └── LICENSE
 ```
@@ -263,12 +261,6 @@ Static build, auto-deployed from `main` on **Netlify**: build command `npm run b
 
 <br/>
 
-## 🟣 AI Assistance
-
-Developed with assistance from Claude (Anthropic) for ideation, research, data-analysis design, and drafting and debugging code and text, including the web app, the Python pipeline and the synthetic demo-data generator. The author reviewed, tested and edited the result. The demo data is synthetic and labelled as such. No image- or audio-generation tools were used, and no NASA logos or branding appear.
-
-<br/>
-
 ## 🟣 References
 
 NISAR, ASF DAAC, every library and font, the story sources and the open items are listed in [`REFERENCES.md`](REFERENCES.md).
@@ -280,8 +272,6 @@ NISAR, ASF DAAC, every library and font, the story sources and the open items ar
 
 ━━━━━━━━━━━━━━ ✦ ✧ ✦ ━━━━━━━━━━━━━━
 
-Built by **Kommal Tariq** · NASA Space Apps Challenge 2026 · "Dancing with the SARs"
-
-Released under the MIT License. Copyright © 2026 Kommal Tariq.
+NASA Space Apps Challenge 2026 · "Dancing with the SARs"
 
 </div>
