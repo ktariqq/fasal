@@ -1,8 +1,38 @@
 [
  {
-  "date": "2025-10-26",
-  "file_color": "frames/2025-10-26_color.png",
-  "file_gray": "frames/2025-10-26.png"
+  "date": "2025-11-07",
+  "file_color": "frames/2025-11-07_color.png",
+  "file_gray": "frames/2025-11-07.png"
+ },
+ {
+  "date": "2025-11-19",
+  "file_color": "frames/2025-11-19_color.png",
+  "file_gray": "frames/2025-11-19.png"
+ },
+ {
+  "date": "2025-12-01",
+  "file_color": "frames/2025-12-01_color.png",
+  "file_gray": "frames/2025-12-01.png"
+ },
+ {
+  "date": "2025-12-25",
+  "file_color": "frames/2025-12-25_color.png",
+  "file_gray": "frames/2025-12-25.png"
+ },
+ {
+  "date": "2026-01-06",
+  "file_color": "frames/2026-01-06_color.png",
+  "file_gray": "frames/2026-01-06.png"
+ },
+ {
+  "date": "2026-01-18",
+  "file_color": "frames/2026-01-18_color.png",
+  "file_gray": "frames/2026-01-18.png"
+ },
+ {
+  "date": "2026-06-23",
+  "file_color": "frames/2026-06-23_color.png",
+  "file_gray": "frames/2026-06-23.png"
  },
  {
   "date": "2026-07-05",
@@ -10,8 +40,53 @@
   "file_gray": "frames/2026-07-05.png"
  },
  {
-  "date": "2026-09-24",
-  "file_color": "frames/2026-09-24_color.png",
-  "file_gray": "frames/2026-09-24.png"
+  "date": "2026-07-17",
+  "file_color": "frames/2026-07-17_color.png",
+  "file_gray": "frames/2026-07-17.png"
+ },
+ {
+  "date": "2026-08-10",
+  "file_color": "frames/2026-08-10_color.png",
+  "file_gray": "frames/2026-08-10.png"
+ },
+ {
+  "date": "2026-08-22",
+  "file_color": "frames/2026-08-22_color.png",
+  "file_gray": "frames/2026-08-22.png"
+ },
+ {
+  "date": "2026-09-03",
+  "file_color": "frames/2026-09-03_color.png",
+  "file_gray": "frames/2026-09-03.png"
+ },
+ {
+  "date": "2026-09-15",
+  "file_color": "frames/2026-09-15_color.png",
+  "file_gray": "frames/2026-09-15.png"
+ },
+ {
+  "date": "2026-09-27",
+  "file_color": "frames/2026-09-27_color.png",
+  "file_gray": "frames/2026-09-27.png"
+ },
+ {
+  "date": "2026-10-09",
+  "file_color": "frames/2026-10-09_color.png",
+  "file_gray": "frames/2026-10-09.png"
+ },
+ {
+  "date": "2026-10-21",
+  "file_color": "frames/2026-10-21_color.png",
+  "file_gray": "frames/2026-10-21.png"
+ },
+ {
+  "date": "2026-11-02",
+  "file_color": "frames/2026-11-02_color.png",
+  "file_gray": "frames/2026-11-02.png"
+ },
+ {
+  "date": "2026-11-14",
+  "file_color": "frames/2026-11-14_color.png",
+  "file_gray": "frames/2026-11-14.png"
  }
 ]

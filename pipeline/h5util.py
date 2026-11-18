@@ -1,11 +1,33 @@
 """HDF5 helpers shared by 04 and 05. Every path comes from config.yaml (h5 section); nothing is hard-wired."""
+import contextlib
+import functools
 import math
 import re
+from pathlib import Path
+import h5py
 import numpy as np
 import pandas as pd
 from PIL import Image, ImageDraw
 from pyproj import Transformer
 from common import *
+
+
+@functools.lru_cache(maxsize=1)
+def _fs():
+    import earthaccess
+    earthaccess.login()  # environment variables, then netrc, then a terminal prompt
+    return earthaccess.get_fsspec_https_session()
+
+
+@contextlib.contextmanager
+def open_h5(src):
+    # src is a local Path or an https URL; a URL is streamed and only the bytes that are read are fetched
+    if isinstance(src, Path):
+        with h5py.File(src, "r") as h:
+            yield h
+        return
+    with _fs().open(src, "rb", block_size=4 << 20, cache_type="blockcache") as fh, h5py.File(fh, "r") as h:
+        yield h
 
 
 def granule_rows(site_id):
