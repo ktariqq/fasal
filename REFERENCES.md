@@ -1,7 +1,5 @@
 # References
 
-Check each license on the package's own page before submitting.
-
 ## Data and documentation
 
 - NASA-ISRO NISAR mission, L-band SAR, and its Level 2 GCOV product, distributed by the ASF DAAC: https://www.earthdata.nasa.gov/data/platforms/space-based-platforms/nisar
@@ -26,12 +24,13 @@ Check each license on the package's own page before submitting.
 
 ## Stories (public domain, retold in the author's own words; no verse quoted)
 
-- Waris Shah, Heer (1766). CITATION_NEEDED: add the edition or translation consulted.
-- Shah Abdul Latif Bhittai, Shah jo Risalo (18th century): Sur Sassui and Sur Umar Marvi. CITATION_NEEDED: add the edition or translation consulted.
+- Sekhon, S. S. (1978). The Love of Hir and Ranjha. Old Boys’ Association, Punjab Agriculture College, Punjab Agricultural University, Ludhiana.
+- Bhitai, S. A. L. (2012). Risalo of Shah Abdul Latif Bhitai (A. Khamisani, Trans., 3rd ed.). Culture Department, Government of Sindh, Karachi.
 
 ## Cultural dates
 
-- Baisakhi (around 13 or 14 April) and Sindhi Culture Day (first Sunday of December). CITATION_NEEDED: add a source URL for each and confirm the dates.
+- Geo News, 'Punjab celebrates Baisakhi, marking beginning of wheat harvest', https://www.geo.tv/latest/599799-punjab-celebrates-baisakhi-marking-start-of-wheat-harvest
+- Dawn, 'People sing and dance to celebrate Sindh Culture Day', https://www.dawn.com/news/1520009/people-sing-and-dance-to-celebrate-sindh-culture-day
 
 ## Historical maps
 
@@ -40,4 +39,4 @@ Check each license on the package's own page before submitting.
 ## Sound, images and AI assistance
 
 - All sound is generated live with the Web Audio API. All graphics are drawn in code (SVG and canvas). There are no external image, audio or music assets.
-- Code was drafted with assistance from Claude (Anthropic) and reviewed, run and edited by the author. [Check the challenge's current rules on AI-assisted work and keep or edit this line accordingly.]
+- Code was drafted with assistance from Claude (Anthropic) and reviewed, run and edited by the author.

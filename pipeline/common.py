@@ -114,7 +114,7 @@ def cultural_events(site, d0, d1):
         for y in range(d0.year, d1.year + 1):
             d = dt.date(y, c["month"], c["day"]) if c["rule"] == "fixed" else first_sunday(y, c["month"])
             if d0 <= d <= d1:
-                out.append({"id": f'{c["id"]}-{y}', "date": d.isoformat(), "type": "cultural", "label": c["label"], "label_ur": c["label_ur"], "description": c["description"], "source": c["source"], "confidence": "n/a", "citation_needed": True})
+                out.append({"id": f'{c["id"]}-{y}', "date": d.isoformat(), "type": "cultural", "label": c["label"], "label_ur": c["label_ur"], "description": c["description"], "source": c["source"], "confidence": "n/a", "citation_needed": c["source"].startswith("CITATION_NEEDED")})
     return out
 
 

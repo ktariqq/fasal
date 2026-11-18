@@ -15,7 +15,7 @@
  "polarization": "HH",
  "parameters": {
   "prom": 2.0,
-  "min_dates": 20,
+  "min_dates": 15,
   "min_span": 365,
   "abrupt": 3.0,
   "onset": 1.0,

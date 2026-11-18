@@ -1,8 +1,8 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { acqText, clamp, fmtDate, fmtDb } from '../lib/format'
 import type { Polygon } from 'geojson'
 import { useStore } from '../store/useStore'
 import { frameUrl } from '../lib/loadData'
-import { acqText, fmtDate, fmtDb } from '../lib/format'
 import { nearestEvent, nearestIndex } from '../lib/phenology'
 import { dbToHz, normDb, pulse, setActive, setTone, startAudio, toneWord } from '../lib/audio'
 import type { SiteBundle, SiteEvent, Story } from '../types/data'
@@ -63,6 +63,14 @@ function Inner({ b, stories }: { b: SiteBundle; stories: Story[] }) {
   const { setIdx, setPlaying, setPol, setView, setSound, setDrawer, go } = useStore.getState()
   const [pinned, setPinned] = useState<string | null>(null)
   const [outlines, setOutlines] = useState(true)
+  const [zoom, setZoom] = useState(1)
+  const [pan, setPan] = useState({ x: 0, y: 0 })
+  const [grab, setGrab] = useState(false)
+  const last = useRef<{ x: number; y: number } | null>(null)
+  const fit = (p: { x: number; y: number }, z: number) => { const L = ((z - 1) / 2) * 100; return { x: clamp(p.x, -L, L), y: clamp(p.y, -L, L) } }
+  const nudge = (dx: number, dy: number) => setPan((p) => fit({ x: p.x + dx, y: p.y + dy }, zoom))
+  const changeZoom = (z: number) => { setZoom(z); setPan((p) => fit(p, z)) }
+  const stop = () => { last.current = null; setGrab(false) }
   const [audioMsg, setAudioMsg] = useState('')
 
   const dates = b.series.dates
@@ -158,10 +166,24 @@ function Inner({ b, stories }: { b: SiteBundle; stories: Story[] }) {
 
         <section className="sv-center" aria-label="Radar frame">
           <BrassDial label={`Radar frame for ${fmtDate(dates[i])}`}>
-            <RadarFrame src={src} alt={`${b.series.polarizations[0]} radar backscatter frame, ${fmtDate(dates[i])}. ${b.meta.data_mode === 'demo' ? 'Illustrative demo data.' : ''}`} />
-            {outlines && <Fields b={b} />}
+            <div
+              className={`zoom${grab ? ' grabbing' : ''}`}
+              style={{ transform: `translate(${pan.x}%, ${pan.y}%) scale(${zoom})`, cursor: zoom > 1 ? (grab ? 'grabbing' : 'grab') : 'default' }}
+              tabIndex={zoom > 1 ? 0 : -1}
+              aria-label="Radar frame. When zoomed in, drag or use the arrow keys to pan."
+              onDragStart={(e) => e.preventDefault()}
+              onPointerDown={(e) => { if (zoom === 1) return; e.currentTarget.setPointerCapture(e.pointerId); last.current = { x: e.clientX, y: e.clientY }; setGrab(true) }}
+              onPointerMove={(e) => { if (!last.current) return; const w = e.currentTarget.offsetWidth; nudge(((e.clientX - last.current.x) / w) * 100, ((e.clientY - last.current.y) / w) * 100); last.current = { x: e.clientX, y: e.clientY } }}
+              onPointerUp={stop}
+              onPointerCancel={stop}
+              onKeyDown={(e) => { const s = e.shiftKey ? 10 : 4; const m: Record<string, [number, number]> = { ArrowLeft: [s, 0], ArrowRight: [-s, 0], ArrowUp: [0, s], ArrowDown: [0, -s] }; if (zoom > 1 && m[e.key]) { e.preventDefault(); nudge(...m[e.key]) } }}
+            >
+              <RadarFrame src={src} alt={`${b.series.polarizations[0]} radar backscatter frame, ${fmtDate(dates[i])}. ${b.meta.data_mode === 'demo' ? 'Illustrative demo data.' : ''}`} />
+              {outlines && <Fields b={b} />}
+            </div>
           </BrassDial>
           <div className="dial-controls">
+            {[1, 1.5, 2].map((z) => <button key={z} className="btn" aria-pressed={zoom === z} onClick={() => changeZoom(z)}>{z}x</button>)}
             <button className="btn" aria-pressed={view === 'color'} onClick={() => setView('color')}>Colour</button>
             <button className="btn" aria-pressed={view === 'gray'} onClick={() => setView('gray')}>Science</button>
             <button className="btn ghost" aria-pressed={outlines} onClick={() => setOutlines(!outlines)}>Field outlines</button>

@@ -17,14 +17,14 @@ export default function BrassDial({ children, label }: { children: ReactNode; la
             <stop offset="1" stopColor="#6b5330" />
           </linearGradient>
         </defs>
-        <circle r="97" fill="none" stroke="url(#brassG)" strokeWidth="6" />
-        <circle r="91.5" fill="none" stroke="var(--rebecca)" strokeWidth="5" />
-        <circle r="86" fill="none" stroke="#0b0514" strokeWidth="6" />
+        <circle r="98" fill="none" stroke="url(#brassG)" strokeWidth="3" />
+        <circle r="95" fill="none" stroke="var(--rebecca)" strokeWidth="3" />
+        <circle r="92.5" fill="none" stroke="#0b0514" strokeWidth="2" />
         {Array.from({ length: 72 }, (_, i) => (
           <line key={i} x1="0" y1="-100" x2="0" y2={i % 6 === 0 ? -95 : -97.5} transform={`rotate(${i * 5})`} stroke="#2a1a3a" strokeWidth={i % 6 === 0 ? 1.4 : 0.7} />
         ))}
         {[0, 90, 180, 270].map((a) => (
-          <circle key={a} r="3" cy="-91.5" transform={`rotate(${a})`} fill="url(#brassG)" stroke="#2a1a3a" strokeWidth="0.8" />
+          <circle key={a} r="2.2" cy="-95" transform={`rotate(${a})`} fill="url(#brassG)" stroke="#2a1a3a" strokeWidth="0.8" />
         ))}
         <path d="M0,-84 l-4,-7 h8 z" fill="var(--lavender)" />
         <text y="-77" textAnchor="middle" fontFamily="Cinzel, serif" fontSize="7" fill="var(--lavender)">N</text>
