@@ -61,11 +61,11 @@
 
 /* bottom bar and scrubber */
 .sv-bottom { padding: 4px 16px 10px; background: linear-gradient(to top, rgba(11, 5, 20, 0.92) 60%, transparent); }
-.play-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+.play-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px;}
 .readout { flex: 1; min-width: 180px; }
 .gears-mini { width: 76px; height: 44px; flex: none; }
 .paused .spin { animation-play-state: paused; }
-.scrub { position: relative; height: 104px; padding: 0 22px; touch-action: none; user-select: none; cursor: pointer; border-radius: 6px; }
+.scrub { position: relative; height: 104px; padding: 0 22px; touch-action: none; user-select: none; cursor: pointer; border-radius: 6px; margin-top: -20px;}
 .rail { position: absolute; left: 22px; right: 22px; top: 40px; height: 6px; border-radius: 3px; background: linear-gradient(180deg, #d1ae78, var(--brass) 50%, #6b5330); box-shadow: 0 0 0 1px var(--brass-dim), 0 2px 8px rgba(0, 0, 0, 0.6); }
 .tick { position: absolute; top: -5px; width: 1px; height: 16px; background: var(--lavender); opacity: 0.55; }
 .tick.month { top: 12px; height: 8px; background: var(--brass); opacity: 1; width: 2px; }

@@ -183,11 +183,28 @@ function Inner({ b, stories }: { b: SiteBundle; stories: Story[] }) {
             </div>
           </BrassDial>
           <div className="dial-controls">
-            {[1, 1.5, 2].map((z) => <button key={z} className="btn" aria-pressed={zoom === z} onClick={() => changeZoom(z)}>{z}x</button>)}
-            <button className="btn" aria-pressed={view === 'color'} onClick={() => setView('color')}>Colour</button>
-            <button className="btn" aria-pressed={view === 'gray'} onClick={() => setView('gray')}>Science</button>
+            <div role="group" aria-label="Display mode" style={{ display: 'flex', gap: 2, padding: 3, borderRadius: 7, background: 'var(--transparent)', border: '1px solid var(--rebecca)' }}>
+              {(['color', 'gray'] as const).map(v => (
+                <button key={v} className="btn" aria-pressed={view === v} onClick={() => setView(v)}
+                  style={{ padding: '0.3em 0.65em', background: view === v ? 'var(--rebecca)' : 'transparent', borderColor: 'transparent', color: view === v ? '#fff' : 'var(--lavender)' }}>
+                  {v === 'color' ? 'Colour' : 'Science'}
+                </button>
+              ))}
+            </div>
+
+            <div role="group" aria-label="Zoom" style={{ display: 'flex', gap: 2, padding: 3, borderRadius: 7, background: 'var(--transparent)', border: '1px solid var(--rebecca)' }}>
+              {[1, 1.5, 2].map(z => (
+                <button key={z} className="btn" aria-pressed={zoom === z} onClick={() => changeZoom(z)}
+                  style={{ padding: '0.3em 0.65em', background: zoom === z ? 'var(--rebecca)' : 'transparent', borderColor: 'transparent', color: zoom === z ? '#fff' : 'var(--lavender)' }}>
+                  {z}×
+                </button>
+              ))}
+            </div>
+
             <button className="btn ghost" aria-pressed={outlines} onClick={() => setOutlines(!outlines)}>Field outlines</button>
           </div>
+
+          
           <p className="hud caption">{fmtDate(dates[i])} | frame polarization {pols[0]} | {b.meta.sensor}</p>
         </section>
 

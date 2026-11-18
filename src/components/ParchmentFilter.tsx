@@ -7,7 +7,7 @@ export default function ParchmentFilter() {
           <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="2" seed="3" result="low" />
           <feDisplacementMap in="SourceGraphic" in2="low" scale="14" xChannelSelector="R" yChannelSelector="G" result="edge" />
           <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="4" seed="9" result="grain" />
-          <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0.42  0 0 0 0 0.3  0 0 0 0 0.36  0 0 0 0.9 -0.35" result="tint" />
+          <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0.42  0 0 0 0 0.3  0 0 0 0 0.36  0 0 0 0.67 -0.35" result="tint" />
           <feComposite in="tint" in2="edge" operator="in" result="tintClip" />
           <feBlend in="tintClip" in2="edge" mode="multiply" />
         </filter>

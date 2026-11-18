@@ -44,7 +44,7 @@ export default function Atlas({ manifest }: { manifest: Manifest }) {
         <h2>The Atlas</h2>
         <p>Three sites on the Indus plains. Choose one to hear its radar rhythm.</p>
       </div>
-      <button className="btn ghost replay" style={fade} onClick={() => go('opening')}>Replay intro</button>
+      <button className="btn replay" style={fade} onClick={() => go('opening')}>Replay intro</button>
       {hs && hover && !diving && (
         <Cartouche
           title={hs.name}
