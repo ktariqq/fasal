@@ -50,15 +50,7 @@ function Inner({ b }: { b: SiteBundle }) {
         {state === 'missing' && (
           <section className="mm-empty parchment" aria-label="Add a public-domain map">
             <h2>Add a public-domain map</h2>
-            <p>No historical map is installed for this site yet. FASAL does not bundle any map whose license has not been verified.</p>
-            <ol>
-              <li>Search for a historical map of the area at: {SOURCES.join(', ')}.</li>
-              <li>Verify the license yourself. Use only maps you can confirm are in the public domain or that permit reuse with credit.</li>
-              <li>Crop and align it, as closely as you can, to this site's extent: west {W}, south {S}, east {E}, north {N} (degrees). A square crop works best.</li>
-              <li>Save it as <code>public/maps/{b.meta.id}.jpg</code>.</li>
-              <li>Fill in <code>public/maps/maps.json</code> for <code>{b.meta.id}</code>: <code>title</code>, <code>year</code>, <code>source_url</code>, <code>license</code>, and set <code>verified</code> to true once you have checked it.</li>
-            </ol>
-            <p>Reload this page and the swipe will appear.</p>
+            <p>No historical map is installed for this site yet.</p>          
           </section>
         )}
         {state === 'ok' && info && f && (
@@ -77,11 +69,12 @@ function Inner({ b }: { b: SiteBundle }) {
               rightLabel={`Radar, ${fmtDate(f.date)}${b.meta.data_mode === 'demo' ? ' (ILLUSTRATIVE DEMO)' : ''}`}
             />
             <p className="mm-cap">
-              <strong>{info.title || 'Untitled map (fill in maps.json)'}</strong>
+              <strong>{info.title || 'Untitled map'}
               {info.year ? `, ${info.year}` : ''}.{' '}
-              <span className="mono">License: {info.license || 'not recorded'}.</span>{' '}
+              </strong>
+              <span className="mono">[License: {info.license || 'not recorded'}.</span>{' '}
               {info.source_url ? <a href={info.source_url} target="_blank" rel="noopener noreferrer">Source</a> : <span className="mono">Source: not recorded.</span>}{' '}
-              {!info.verified && <span className="chip warn">VERIFY LICENSE</span>}
+              {!info.verified && <span className="chip warn">VERIFY LICENSE</span>}]
             </p>
           </section>
         )}

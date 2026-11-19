@@ -1,7 +1,7 @@
 {
  "site_id": "larkana",
  "data_mode": "demo",
- "source": "SYNTHETIC: pipeline/07_make_demo_data.py (illustrative; not NISAR observations)",
+ "source": "SYNTHETIC illustrative data, not NISAR observations",
  "sensor": "SYNTHETIC (illustrative demo)",
  "polarizations": [
   "HH",

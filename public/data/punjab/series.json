@@ -1,7 +1,7 @@
 {
  "site_id": "punjab",
  "data_mode": "real",
- "source": "NASA-ISRO NISAR GCOV via ASF DAAC; extracted by pipeline/04_extract_timeseries.py",
+ "source": "NASA-ISRO NISAR GCOV via ASF DAAC",
  "sensor": "NISAR L-band GCOV",
  "polarizations": [
   "HH",

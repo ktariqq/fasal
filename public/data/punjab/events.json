@@ -17,7 +17,7 @@
   "label": "Sustained low backscatter",
   "label_ur": "",
   "description": "HH stays in the lowest quarter of its range from 2026-06-23 to 2026-07-17 (3 acquisitions) in the Jun-Sep window. Consistent with standing water or a smooth bare surface; not confirmed.",
-  "source": "FASAL rule-based hint on HH median (pipeline/common.py); a hypothesis, not ground truth",
+  "source": "FASAL rule-based hint on HH median; a hypothesis, not ground truth",
   "confidence": "low",
   "citation_needed": false
  },
@@ -28,7 +28,7 @@
   "label": "Backscatter rise",
   "label_ur": "",
   "description": "HH climbs 1.0 dB or more above its preceding minimum (-12.1 dB) and stays up. Consistent with canopy growth or field preparation; not confirmed.",
-  "source": "FASAL rule-based hint on HH median (pipeline/common.py); a hypothesis, not ground truth",
+  "source": "FASAL rule-based hint on HH median; a hypothesis, not ground truth",
   "confidence": "low",
   "citation_needed": false
  },
@@ -39,7 +39,7 @@
   "label": "Backscatter maximum",
   "label_ur": "",
   "description": "Local maximum of -8.8 dB, 3.3 dB above the preceding minimum. Consistent with a canopy near full development; not confirmed.",
-  "source": "FASAL rule-based hint on HH median (pipeline/common.py); a hypothesis, not ground truth",
+  "source": "FASAL rule-based hint on HH median; a hypothesis, not ground truth",
   "confidence": "low",
   "citation_needed": false
  }

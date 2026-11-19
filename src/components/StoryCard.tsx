@@ -23,7 +23,7 @@ export default function StoryCard({ story }: { story?: Story }) {
       <p className="link-note">{story.landscape_link}</p>
       <p className="source">
         {story.source.includes('CITATION_NEEDED') && <span className="chip warn">CITATION_NEEDED</span>}
-        Retold in the FASAL author's own words. Source note: {story.source}
+        Source note: {story.source}
       </p>
     </article>
   )

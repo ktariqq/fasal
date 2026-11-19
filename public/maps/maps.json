@@ -1,5 +1,5 @@
 [
  {"site_id": "larkana", "file": "maps/larkana.jpg", "title": "", "year": null, "source_url": "", "license": "", "verified": false},
- {"site_id": "punjab", "file": "maps/punjab.jpg", "title": "", "year": null, "source_url": "", "license": "", "verified": false},
+ {"site_id":"punjab","file":"maps/punjab.jpg","title":"India XII. The Punjab with part of Afghanistan, Kashmeer, Sinde &c.","year":1856,"source_url":"https://www.davidrumsey.com/luna/servlet/detail/RUMSEY~8~1~292731~90063974","license":"Public Domain","verified":true},
  {"site_id": "thar", "file": "maps/thar.jpg", "title": "", "year": null, "source_url": "", "license": "", "verified": false}
 ]

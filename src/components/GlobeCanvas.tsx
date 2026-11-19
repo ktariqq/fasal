@@ -8,7 +8,7 @@ import { drawSweep } from './RadarSweep'
 
 export interface Marker { id: string; lon: number; lat: number; label: string }
 export interface Focus { lon: number; lat: number; scale: number }
-export const PAKISTAN: Focus = { lon: 69.3, lat: 29.5, scale: 6 }
+export const PAKISTAN: Focus = { lon: 69.3, lat: 29.5, scale: 10 }
 
 interface Props {
   reduced: boolean

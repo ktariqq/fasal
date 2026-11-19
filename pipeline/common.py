@@ -132,7 +132,7 @@ def build_events(site, dates, med, pol=None, cfg=None):
     rise      : climbs `onset` dB above the preceding minimum and stays up       -> consistent with canopy growth
     peak      : prominent local maximum (`prom` dB)                              -> consistent with a developed canopy
     fall      : drop of `abrupt` dB within two acquisitions after a peak         -> consistent with harvest or clearing
-    gap       : days from a fall to the next rise                                -> harvest-to-sowing hypothesis (CITATION_NEEDED)
+    gap       : days from a fall to the next rise                                -> harvest-to-sowing hypothesis
     cropping-intensity: prominent peaks in the first 365 days, only if enough dates span a full year."""
     p = {**DEFAULTS, **(cfg or {})}
     n = len(dates)
@@ -145,7 +145,7 @@ def build_events(site, dates, med, pol=None, cfg=None):
 
     def ev(kind, i, label, desc, conf, cit=False):
         return {"id": f"sig-{kind}-{dates[i].isoformat()}", "date": dates[i].isoformat(), "type": "signal", "label": label, "label_ur": "", "description": desc,
-                "source": f"FASAL rule-based hint on {pol} median (pipeline/common.py); a hypothesis, not ground truth", "confidence": conf, "citation_needed": cit}
+                "source": f"FASAL rule-based hint on {pol} median; a hypothesis, not ground truth", "confidence": conf, "citation_needed": cit}
 
     if n >= 5:
         sm = smooth(med[pol])
@@ -180,7 +180,7 @@ def build_events(site, dates, med, pol=None, cfg=None):
             if k in fal and k + 1 in ons and ons[k + 1] > fal[k]:
                 g = (dates[ons[k + 1]] - dates[fal[k]]).days
                 gaps.append({"fall_date": dates[fal[k]].isoformat(), "next_rise_date": dates[ons[k + 1]].isoformat(), "days": g, "citation_needed": True})
-                sig.append(ev("gap", ons[k + 1], "Fall-to-rise gap (hypothesis)", f"{g} days between a detected abrupt fall ({dates[fal[k]]}) and the next detected rise ({dates[ons[k + 1]]}). May reflect a harvest-to-sowing turnaround; any agronomic framing needs a citation. CITATION_NEEDED.", "low", True))
+                sig.append(ev("gap", ons[k + 1], "Fall-to-rise gap (hypothesis)", f"{g} days between a detected abrupt fall ({dates[fal[k]]}) and the next detected rise ({dates[ons[k + 1]]}). May reflect a harvest-to-sowing turnaround; not confirmed.", "low", True))
         end = dates[0] + dt.timedelta(days=365)
         inw = [dates[a].isoformat() for a in pk if dates[a] < end]
         ci["peaks_in_window"] = inw
