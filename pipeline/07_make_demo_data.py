@@ -61,7 +61,7 @@ def make_site(site, a):
         save_frame(g, d / "frames" / f"{dte}_color.png", d / "frames" / f"{dte}.png")
         fr.append({"date": dte.isoformat(), "file_color": f"frames/{dte}_color.png", "file_gray": f"frames/{dte}.png"})
     H, V = np.array(hh_f).T, np.array(hv_f).T
-    ser = {"site_id": sid, "data_mode": "demo", "source": "SYNTHETIC: pipeline/07_make_demo_data.py (illustrative; not NISAR observations)", "sensor": "SYNTHETIC (illustrative demo)",
+    ser = {"site_id": sid, "data_mode": "demo", "source": "SYNTHETIC illustrative data, not NISAR observations", "sensor": "SYNTHETIC (illustrative demo)",
            "polarizations": ["HH", "HV"], "unit": "dB", "dates": [x.isoformat() for x in dates], "series": {"HH": stat(H), "HV": stat(V)},
            "per_field": [{"id": f["id"], "HH": np.round(H[i], 2).tolist(), "HV": np.round(V[i], 2).tolist()} for i, f in enumerate(fields)], "n_acquisitions": len(dates)}
     evs, an = build_events(site, dates, {k: v["median"] for k, v in ser["series"].items()}, cfg=load_config().get("analysis"))

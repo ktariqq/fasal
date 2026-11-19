@@ -97,7 +97,7 @@ def extract(site, cfg, hc, a):
     def stat(X):
         return {"median": np.nanmedian(X, 0).round(2).tolist(), "q25": np.nanpercentile(X, 25, 0).round(2).tolist(), "q75": np.nanpercentile(X, 75, 0).round(2).tolist()}
 
-    ser = {"site_id": sid, "data_mode": "real", "source": f"NASA-ISRO NISAR {cfg.get('search', {}).get('processing_level', 'GCOV')} via ASF DAAC; extracted by pipeline/04_extract_timeseries.py",
+    ser = {"site_id": sid, "data_mode": "real", "source": f"NASA-ISRO NISAR {cfg.get('search', {}).get('processing_level', 'GCOV')} via ASF DAAC.",
            "sensor": f"NISAR L-band {cfg.get('search', {}).get('processing_level', 'GCOV')}", "polarizations": pols, "unit": "dB", "dates": [d.isoformat() for d in dates],
            "series": {p: stat(M[p]) for p in pols},
            "per_field": [{"id": i, **{p: [None if np.isnan(v) else round(float(v), 2) for v in M[p][k]] for p in pols}} for k, i in enumerate(ids)],
@@ -134,7 +134,7 @@ def main():
     a = ap.parse_args()
     cfg = load_config()
     if not cfg.get("h5"):
-        raise SystemExit("config.yaml has no h5 section; run 03_inspect_h5.py and edit it")
+        raise SystemExit("Configuration has no h5 section.")
     for site in load_sites(a.sites):
         extract(site, cfg, cfg["h5"], a)
 
