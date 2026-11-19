@@ -42,6 +42,7 @@ export default function App() {
   const [boot, setBoot] = useState<Boot>({ status: 'loading' })
   const scene = useStore((s) => s.scene)
   const siteId = useStore((s) => s.siteId)
+  const loadId = useStore((s) => s.loadId)
   const bundle = useStore((s) => s.bundle)
   const bundleError = useStore((s) => s.bundleError)
   const setBundle = useStore((s) => s.setBundle)
@@ -65,6 +66,7 @@ export default function App() {
     return () => { live = false }
   }, [])
 
+  // loadId is a dependency so reopening the same site loads it again
   useEffect(() => {
     if (!siteId || boot.status !== 'ready') return
     const meta = boot.manifest.sites.find((s) => s.id === siteId)
@@ -74,11 +76,11 @@ export default function App() {
       .then((b) => { if (live) setBundle(b) })
       .catch((e: Error) => { if (live) setBundle(null, e.message) })
     return () => { live = false }
-  }, [siteId, boot, setBundle])
+  }, [siteId, loadId, boot, setBundle])
 
   if (boot.status === 'loading') return <Waiting text="Unrolling the chart..." />
   if (boot.status === 'error') {
-    return <Fallback title="Data not found" detail={`${boot.message}. Run python pipeline/07_make_demo_data.py and python pipeline/08_build_manifest.py, then reload.`} action={() => location.reload()} label="Reload" />
+    return <Fallback title="Data not found" detail={`${boot.message}. The atlas data could not be loaded. Please reload the page.`} action={() => location.reload()} label="Reload" />
   }
   const { manifest, stories } = boot
   const inSite = scene === 'site' || scene === 'map' || scene === 'record'

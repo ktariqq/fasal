@@ -1,92 +1,110 @@
 [
  {
+  "date": "2025-10-26",
+  "file_color": "frames/2025-10-26_color.png",
+  "file_gray": "frames/2025-10-26.png",
+  "coverage": 0.699
+ },
+ {
   "date": "2025-11-07",
   "file_color": "frames/2025-11-07_color.png",
-  "file_gray": "frames/2025-11-07.png"
+  "file_gray": "frames/2025-11-07.png",
+  "coverage": 0.836
  },
  {
   "date": "2025-11-19",
   "file_color": "frames/2025-11-19_color.png",
-  "file_gray": "frames/2025-11-19.png"
+  "file_gray": "frames/2025-11-19.png",
+  "coverage": 0.701
  },
  {
   "date": "2025-12-01",
   "file_color": "frames/2025-12-01_color.png",
-  "file_gray": "frames/2025-12-01.png"
+  "file_gray": "frames/2025-12-01.png",
+  "coverage": 1.0
  },
  {
   "date": "2025-12-25",
   "file_color": "frames/2025-12-25_color.png",
-  "file_gray": "frames/2025-12-25.png"
+  "file_gray": "frames/2025-12-25.png",
+  "coverage": 1.0
  },
  {
   "date": "2026-01-06",
   "file_color": "frames/2026-01-06_color.png",
-  "file_gray": "frames/2026-01-06.png"
+  "file_gray": "frames/2026-01-06.png",
+  "coverage": 1.0
  },
  {
   "date": "2026-01-18",
   "file_color": "frames/2026-01-18_color.png",
-  "file_gray": "frames/2026-01-18.png"
+  "file_gray": "frames/2026-01-18.png",
+  "coverage": 1.0
  },
  {
   "date": "2026-06-23",
   "file_color": "frames/2026-06-23_color.png",
-  "file_gray": "frames/2026-06-23.png"
+  "file_gray": "frames/2026-06-23.png",
+  "coverage": 1.0
  },
  {
   "date": "2026-07-05",
   "file_color": "frames/2026-07-05_color.png",
-  "file_gray": "frames/2026-07-05.png"
+  "file_gray": "frames/2026-07-05.png",
+  "coverage": 0.999
  },
  {
   "date": "2026-07-17",
   "file_color": "frames/2026-07-17_color.png",
-  "file_gray": "frames/2026-07-17.png"
+  "file_gray": "frames/2026-07-17.png",
+  "coverage": 1.0
  },
  {
   "date": "2026-08-10",
   "file_color": "frames/2026-08-10_color.png",
-  "file_gray": "frames/2026-08-10.png"
+  "file_gray": "frames/2026-08-10.png",
+  "coverage": 1.0
  },
  {
   "date": "2026-08-22",
   "file_color": "frames/2026-08-22_color.png",
-  "file_gray": "frames/2026-08-22.png"
+  "file_gray": "frames/2026-08-22.png",
+  "coverage": 1.0
  },
  {
   "date": "2026-09-03",
   "file_color": "frames/2026-09-03_color.png",
-  "file_gray": "frames/2026-09-03.png"
+  "file_gray": "frames/2026-09-03.png",
+  "coverage": 1.0
  },
  {
   "date": "2026-09-15",
   "file_color": "frames/2026-09-15_color.png",
-  "file_gray": "frames/2026-09-15.png"
+  "file_gray": "frames/2026-09-15.png",
+  "coverage": 1.0
  },
  {
   "date": "2026-09-27",
   "file_color": "frames/2026-09-27_color.png",
-  "file_gray": "frames/2026-09-27.png"
+  "file_gray": "frames/2026-09-27.png",
+  "coverage": 1.0
  },
  {
   "date": "2026-10-09",
   "file_color": "frames/2026-10-09_color.png",
-  "file_gray": "frames/2026-10-09.png"
- },
- {
-  "date": "2026-10-21",
-  "file_color": "frames/2026-10-21_color.png",
-  "file_gray": "frames/2026-10-21.png"
+  "file_gray": "frames/2026-10-09.png",
+  "coverage": 0.791
  },
  {
   "date": "2026-11-02",
   "file_color": "frames/2026-11-02_color.png",
-  "file_gray": "frames/2026-11-02.png"
+  "file_gray": "frames/2026-11-02.png",
+  "coverage": 0.686
  },
  {
   "date": "2026-11-14",
   "file_color": "frames/2026-11-14_color.png",
-  "file_gray": "frames/2026-11-14.png"
+  "file_gray": "frames/2026-11-14.png",
+  "coverage": 0.983
  }
 ]

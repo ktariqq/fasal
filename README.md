@@ -26,12 +26,14 @@
 
 - **Real NISAR on the hero site**: Punjab runs on NISAR GCOV acquisitions; Larkana and Tharparkar remain labelled illustrative demo data
 - **Honest by design**: whether data is real or demo is a field in the data files (`data_mode`). The banner, the frame stamps and the Field Record label all read it; nothing is hard-coded in the interface
-- **NISAR-first pipeline**: ASF search, resumable download, HDF5 inspection and per-field extraction, with no assumed file layout (paths live in `config.yaml` and are confirmed with an inspector script)
-- **Gated analysis**: cropping intensity is estimated only with at least 20 acquisitions spanning at least 365 days; otherwise the app says so
+- **Streamed, not downloaded**: each NISAR granule is read once straight from ASF, resampled onto one fixed lon/lat grid per site and cached as a small file
+- **Partial passes handled**: frames are transparent where a pass missed the site, frames of the same date fill each other's gaps, and a static basemap shows underneath
+- **Fields from the radar itself**: field-like patches are found by segmenting the per-pixel time series, with a check image; polygons can also be drawn by hand
+- **Gated analysis**: cropping intensity is estimated only with at least 20 acquisitions spanning at least 365 days and no gap longer than 45 days; otherwise the app says so
 - **Radar made audible**: backscatter drives a live Web Audio tone, with a visible text equivalent for accessibility
 - **Local context**: Urdu labels, folk tales retold in original words, and cultural dates, each with a source field
 - **Printable Field Record** for every site, carrying the same data-mode label as the app
-- **No external assets**: all graphics are SVG and canvas, all sound is generated live, and the build is fully static
+- **Static build**: all graphics are SVG and canvas, all sound is generated live, and the only image asset is the pre-generated basemap
 
 <br/>
 
@@ -58,7 +60,7 @@ Built solo by **Team Sitaara** for the 2026 NASA Space Apps Challenge, **"Dancin
 | Mode | Source | Where it is labelled |
 |---|---|---|
 | **DEMO** | Synthetic series and frames from `pipeline/07_make_demo_data.py` | Permanent banner, diagonal stamp on every frame, Field Record band and watermark |
-| **REAL** | NISAR GCOV files from the ASF DAAC, via `pipeline/01` to `06` | Sensor name in the legend, gauge and Field Record; "N acquisitions available" |
+| **REAL** | NISAR GCOV granules from the ASF DAAC, via `pipeline/01` to `06` | Sensor name in the legend, gauge and Field Record; "N acquisitions available" |
 | **MIXED** | Some sites real, some demo | Banner states mixed; each site shows its own mode and sensor |
 
 > **Current build:** **Punjab uses real NISAR L2 GCOV data.** **Larkana and Tharparkar use illustrative demo data**, labelled "ILLUSTRATIVE DEMO DATA, NOT NISAR OBSERVATIONS". The app reports the overall mode as **mixed** and shows each site's own mode and sensor. Demo results illustrate the method only and describe no real field.
@@ -71,7 +73,7 @@ Built solo by **Team Sitaara** for the 2026 NASA Space Apps Challenge, **"Dancin
 |---|---|
 | **Impact** | A prototype for how repeat L-band records could give smallholder communities, extension services and educators an independent record of when fields flood, grow and are cleared. The Field Record is something a community can keep. Offered as a future direction, with no yield or food-security claims |
 | **Creativity** | An astro-cartographic "antique observatory" interface drawn entirely in code; sonification of backscatter ("Earth's Choir"); folk tales and a festival calendar on the radar timeline; a historical-map swipe |
-| **Validity** | Transparent rules in code and in a "How to read this" panel; every interpretation phrased as a hypothesis; the acquisition count always shown; cropping intensity gated by data length; a Limits panel; `CITATION_NEEDED` markers wherever a source is owed; no HDF5 layout assumed; real and demo sites are labelled separately in the same app |
+| **Validity** | Transparent rules in code and in a "How to read this" panel; every interpretation phrased as a hypothesis; the acquisition count always shown; cropping intensity gated by data length and gaps; a Limits panel; `CITATION_NEEDED` markers wherever a source is owed; no HDF5 layout assumed; real and demo sites are labelled separately in the same app |
 | **Relevance** | NASA-ISRO NISAR L2 GCOV backscatter from the ASF DAAC is the core data on the hero site (per-field dB, polarization comparison, time series). Two further sites carry labelled demo data that exercise the same pipeline and interface |
 | **Presentation** | A cinematic opening, a guided atlas, print-ready Field Records, keyboard and screen-reader support, and reduced-motion support |
 
@@ -94,8 +96,8 @@ Built solo by **Team Sitaara** for the 2026 NASA Space Apps Challenge, **"Dancin
 |---|---|
 | **Opening** | Engraved globe, armillary rings and a radar sweep over the Indus basin, then a camera move to Pakistan. Skippable and reduced-motion aware |
 | **Atlas** | Pakistan with three pulsing pins; a cartouche shows each site's data mode and acquisition count |
-| **Site View** | Radar frame in a brass porthole, time scrubber with event markers, backscatter chart with interquartile band, story and event cards, polarization and colour/science toggles, playback with sound |
-| **Map Memory** | Keyboard-operable swipe between a public-domain historical map and the radar frame; empty state with instructions until a verified map is added |
+| **Site View** | Radar frame in a brass porthole over an optional basemap, time scrubber with event markers, backscatter chart with interquartile band, story and event cards, polarization and colour/science toggles, playback with sound |
+| **Map Memory** | Keyboard-operable swipe between a public-domain historical map and the radar frame; a short empty state when no verified map exists |
 | **Field Record** | One-page, print-ready summary: chart, detected signals, cultural calendar, cropping-intensity result or "insufficient dates", limits and credits |
 | **Drawers** | "How to read this", "Limits" and "Future of NISAR + FASAL" |
 
@@ -119,18 +121,21 @@ Backscatter is read per polarization in dB. For each sample polygon the pipeline
 | Abrupt fall | Drop of 3 dB or more within two acquisitions after a peak | Consistent with harvest or field clearing |
 | Fall-to-rise gap | Days from a fall to the next rise | Possible harvest-to-sowing turnaround; agronomic framing is `CITATION_NEEDED` |
 
-**Cropping intensity** counts prominent peaks in the first 365 days, and **only** when the series has at least 20 acquisitions covering at least 365 days. Otherwise the app and the Field Record state "Insufficient dates for cropping-intensity estimate."
+**Cropping intensity** counts prominent peaks in the first 365 days, and **only** when the series has at least 15 acquisitions covering at least 365 days with no gap longer than 45 days. Otherwise the app and the Field Record state "Insufficient dates for cropping-intensity estimate."
+
+**Field polygons** are found by blurring each date to reduce speckle, normalising each date over space, reducing the time series to its main components and segmenting it into compact regions. Regions are kept when they are field-sized, convex, homogeneous and show a seasonal swing, then spread across the site. They are homogeneous radar patches, not surveyed boundaries.
 
 <br/>
 
 ## 🟣 Engineering Highlights
 
 - **One source of truth for labels**: the demo banner, frame stamps and Field Record band are generated from `data_mode` and `source` in the JSON, so a site cannot silently change status
-- **Config-driven HDF5 extraction**: `03_inspect_h5.py` prints the real file tree and suggests config values; `04` stops with a precise message if a path is wrong
-- **Resumable downloader**: size confirmation, dry run, per-run GB cap and `Range` resume of partial files
+- **Stream once**: `03_build_cube.py` reads each granule remotely a single time onto a fixed site grid; every later step runs offline from the cache
+- **Config-driven HDF5 extraction**: `02_inspect_h5.py` prints the real file tree and suggests config values; the cube step stops with a precise message if a path is wrong
+- **Correct geolocation on partial passes**: frames, outlines, polygon masks and the basemap share one lon/lat grid; missing data is transparent
 - **Comparable frames**: one percentile stretch per site across all dates; grayscale for science and a violet ramp stored as quantised palette PNGs for small files
 - **Sonification**: pitch maps exponentially from 110 Hz (lowest backscatter) to 880 Hz (highest), through sine and triangle oscillators, a low-pass filter whose cutoff follows the value, a generated reverb impulse and a low tick per time step. Starts only after a user gesture
-- **Resilient front end**: lazy-loaded scenes, prefetch of the previous and next frame only, an error boundary, and graceful fallbacks when any JSON or map file is missing
+- **Resilient front end**: lazy-loaded scenes, cached site bundles, prefetch of the previous and next frame only, an error boundary, and graceful fallbacks when any JSON or map file is missing
 - **Static by design**: no backend, relative base path, deployable to any static host
 - **Accessible**: keyboard-operable slider and swipe with `aria-valuetext`, visible focus rings, a text equivalent for the tone, and `prefers-reduced-motion` respected across canvas, CSS and animation
 
@@ -147,8 +152,8 @@ Backscatter is read per polarization in dB. For each sample polygon the pipeline
 | Motion | Framer Motion, CSS animation, Canvas 2D |
 | Audio | Web Audio API (oscillators, biquad filter, convolver) |
 | Typography | Fontsource, self-hosted: Cinzel, Cinzel Decorative, IM Fell English, Cormorant Garamond, JetBrains Mono, Noto Nastaliq Urdu |
-| Pipeline | Python 3.10+, asf_search, h5py, NumPy, SciPy, pandas, pyproj, Pillow, PyYAML, tqdm |
-| Data | NASA-ISRO NISAR L2 GCOV, distributed by the ASF DAAC |
+| Pipeline | Python 3.10+, asf_search, earthaccess, h5py, NumPy, SciPy, scikit-image, pandas, pyproj, Pillow, PyYAML, tqdm |
+| Data | NASA-ISRO NISAR L2 GCOV, distributed by the ASF DAAC; Sentinel-2 cloudless basemap by EOX |
 | Hosting | GitHub, Netlify (static, auto-deploy) |
 
 <br/>
@@ -157,15 +162,16 @@ Backscatter is read per polarization in dB. For each sample polygon the pipeline
 
 | Script | Purpose |
 |---|---|
-| `00_README.md` | Earthdata Login (token or `.netrc`), setup, run order, manual ASF Vertex fallback |
-| `01_search_nisar.py` | Search ASF for NISAR granules over each site box; writes `granules_<site>.csv` |
-| `02_download.py` | Download with size prompt, resume, GB cap and dry run |
-| `03_inspect_h5.py` | Print the HDF5 tree, candidate rasters, coordinates and suggested config |
-| `04_extract_timeseries.py` | Per-polygon backscatter in dB into `series.json`, with N acquisitions |
-| `05_make_frames.py` | Crop and stretch to PNG frames, grayscale and violet, plus `frames.json` |
+| `00_README.md` | Earthdata Login, setup, run order, manual ASF Vertex fallback |
+| `01_search_nisar.py` | Search ASF for NISAR granules over each site box; writes `granules_<site>.csv` with URLs |
+| `02_inspect_h5.py` | Print the HDF5 tree of a local or streamed file, candidate rasters and suggested config |
+| `03_build_cube.py` | Stream each granule once, resample onto the site grid, cache in `out/cube/` |
+| `04_derive_fields.py` | Segment the cached time series into field-like polygons; writes `fields/<site>.geojson` and a check image |
+| `05_extract.py` | Per-polygon backscatter in dB into `series.json`, transparent frames and `frames.json` |
 | `06_derive_events.py` | Rule-based signals, gap metrics, gated cropping intensity, cultural events |
 | `07_make_demo_data.py` | Synthetic data for all sites, stamped and labelled as demo |
 | `08_build_manifest.py` | Validate every JSON file and write `manifest.json`; reports real, demo or mixed |
+| `09_make_basemap.py` | Stitch a static basemap onto the site grid from XYZ tiles |
 
 <br/>
 
@@ -173,12 +179,12 @@ Backscatter is read per polarization in dB. For each sample polygon the pipeline
 
 ```
 fasal/
-├── pipeline/            # offline Python: search, download, inspect, extract, frames, events, demo, manifest
-│   ├── config.yaml      # HDF5 paths and analysis thresholds
-│   ├── sites.json       # site boxes, starter polygons, cultural dates
-│   └── fields/          # optional hand-drawn polygons (override sites.json)
+├── pipeline/            # offline Python: search, inspect, cube, fields, extract, events, demo, manifest, basemap
+│   ├── config.yaml      # HDF5 paths, grid size and analysis thresholds
+│   ├── sites.json       # site boxes, starter polygons (demo sites), cultural dates
+│   └── fields/          # polygons from 04 or drawn by hand (override sites.json)
 ├── public/
-│   ├── data/<site>/     # series, events, frames, analysis, fields (generated)
+│   ├── data/<site>/     # series, events, frames, analysis, fields, basemap (generated)
 │   └── maps/            # optional historical maps + maps.json
 ├── src/
 │   ├── scenes/          # Opening, Atlas, SiteView, MapMemory, FieldRecord
@@ -195,7 +201,7 @@ fasal/
 
 ## 🟣 Getting Started
 
-Runs in DEMO mode with no downloads:
+Runs in DEMO mode with no network access:
 
 ```bash
 git clone https://github.com/ktariqq/fasal.git
@@ -216,34 +222,36 @@ npm run build      # static site in dist/
 ## 🟣 Using Real NISAR Data
 
 ```bash
-pip install asf_search h5py pyproj pandas tqdm
+pip install -r pipeline/requirements.txt
 python pipeline/01_search_nisar.py --sites punjab
-python pipeline/02_download.py --sites punjab --dry-run
-python pipeline/02_download.py --sites punjab --limit 6
-python pipeline/03_inspect_h5.py pipeline/out/data/punjab/<file>.h5
-# edit the h5 section of pipeline/config.yaml from what 03 printed
-python pipeline/04_extract_timeseries.py --sites punjab
-python pipeline/05_make_frames.py --sites punjab
+python pipeline/02_inspect_h5.py <one url from pipeline/out/granules_punjab.csv>
+# edit the h5 section of pipeline/config.yaml from what 02 printed
+python pipeline/03_build_cube.py --sites punjab --path 135 --direction DESCENDING
+python pipeline/04_derive_fields.py --sites punjab --path 135 --direction DESCENDING
+python pipeline/05_extract.py --sites punjab --path 135 --direction DESCENDING
 python pipeline/06_derive_events.py --sites punjab
+python pipeline/09_make_basemap.py --sites punjab
 python pipeline/08_build_manifest.py
 ```
-Punjab was produced with exactly these steps; its HDF5 paths in `config.yaml` were confirmed with `03_inspect_h5.py` on the downloaded files. If you run another site, confirm its paths the same way. If few acquisitions exist, the app says "N acquisitions available" and omits cropping intensity. Full steps, authentication and a troubleshooting guide are in [`pipeline/00_README.md`](pipeline/00_README.md). A site becomes REAL only when its `series.json` says `"data_mode": "real"`.
+Granules are streamed, never stored whole. If few acquisitions exist, the app says "N acquisitions available" and omits cropping intensity. Full steps, authentication and a manual fallback are in [`pipeline/00_README.md`](pipeline/00_README.md). A site becomes REAL only when its `series.json` says `"data_mode": "real"`.
 
 <br/>
 
 ## 🟣 Add a Historical Map
 
-Drop a verified public-domain image at `public/maps/<site>.jpg` and fill in its entry in `public/maps/maps.json` (`title`, `year`, `source_url`, `license`, `verified`). Suggested places to search: Library of Congress, David Rumsey Map Collection, Wikimedia Commons and the British Library. Verify each license yourself. Until a map is added, Map Memory shows an "Add a public-domain map" panel.
+Drop a verified public-domain image at `public/maps/<site>.jpg` and add its entry to `public/maps/maps.json` (`site_id`, `file`, `title`, `year`, `source_url`, `license`, `verified`). Suggested places to search: Library of Congress, David Rumsey Map Collection, Wikimedia Commons and the British Library. Verify each license yourself. Until a map is added, Map Memory shows a short empty state.
 
 <br/>
 
 ## 🟣 Limitations
 
-- **Revisit gaps**: short events can fall between acquisitions
+- **Revisit gaps**: short events can fall between acquisitions, and the Punjab record has a multi-month hole
+- **Partial passes**: some dates cover only part of a site; frames are transparent there and fields without enough valid pixels are left out for that date
 - **Speckle**: averaging inside a field reduces it but does not remove it
 - **Confounds**: incidence angle and soil moisture change backscatter without any change in the crop
 - **No ground truth**: nothing is validated against field observations
-- **Small samples**: four polygons per site cannot represent a region
+- **Derived polygons**: fields are homogeneous radar patches at roughly 10 to 20 m posting, so small fields are not resolved and boundaries are approximate
+- **Small samples**: a handful of polygons per site cannot represent a region
 - **Interpretation**: every reading is a hypothesis, not a measurement of what grew
 - **Short real archive**: the Punjab series covers limited acquisitions; seasonal patterns beyond the window cannot be judged
 
@@ -257,13 +265,13 @@ Directions, not claims: more sites and years, comparison with field observations
 
 ## 🟣 Deployment
 
-Static build, auto-deployed from `main` on **Netlify**: build command `npm run build`, publish directory `dist`. The relative base path (`./`) also works on GitHub Pages, Vercel, Cloudflare Pages and any file host. Generated demo data in `public/data/` is committed so the deployed site runs with no pipeline step.
+Static build, auto-deployed from `main` on **Netlify** (`netlify.toml`: build command `npm run build`, publish directory `dist`). The relative base path (`./`) also works on GitHub Pages, Vercel, Cloudflare Pages and any file host. Generated data in `public/data/` is committed so the deployed site runs with no pipeline step.
 
 <br/>
 
 ## 🟣 References
 
-NISAR, ASF DAAC, every library and font, the story sources and the open items are listed in [`REFERENCES.md`](REFERENCES.md).
+NISAR, ASF DAAC, every library and font, the story sources and the basemap credit are listed in [`REFERENCES.md`](REFERENCES.md).
 
 <br/>
 <br/>

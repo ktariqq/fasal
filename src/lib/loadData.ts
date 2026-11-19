@@ -1,5 +1,5 @@
 import type { FeatureCollection } from 'geojson'
-import type { Analysis, FrameRef, Manifest, MapInfo, Series, SiteBundle, SiteEvent, SiteMeta, Story } from '../types/data'
+import type { Analysis, BasemapInfo, FrameRef, Manifest, MapInfo, Series, SiteBundle, SiteEvent, SiteMeta, Story } from '../types/data'
 
 export const url = (p: string) => `${import.meta.env.BASE_URL}${p.replace(/^\/+/, '')}`
 
@@ -18,16 +18,28 @@ export const loadManifest = () => getJson<Manifest>('data/manifest.json')
 export const loadStories = async () => (await optional<Story[]>('data/stories.json')) ?? []
 export const loadMaps = async () => (await optional<MapInfo[]>('maps/maps.json')) ?? []
 
-export async function loadSite(meta: SiteMeta): Promise<SiteBundle> {
+async function fetchSite(meta: SiteMeta): Promise<SiteBundle> {
   const d = `data/${meta.id}`
-  const [series, events, frames, analysis, fields] = await Promise.all([
+  const [series, events, frames, analysis, fields, basemap] = await Promise.all([
     getJson<Series>(`${d}/series.json`),
     optional<SiteEvent[]>(`${d}/events.json`),
     getJson<FrameRef[]>(`${d}/frames.json`),
     optional<Analysis>(`${d}/analysis.json`),
     optional<FeatureCollection>(`${d}/fields.geojson`),
+    optional<BasemapInfo>(`${d}/basemap.json`),
   ])
-  return { meta, series, events: events ?? [], frames, analysis, fields }
+  return { meta, series, events: events ?? [], frames, analysis, fields, basemap }
+}
+
+// one load per site per visit; a failed load is forgotten so it can be retried
+const cache = new Map<string, Promise<SiteBundle>>()
+export function loadSite(meta: SiteMeta): Promise<SiteBundle> {
+  const hit = cache.get(meta.id)
+  if (hit) return hit
+  const p = fetchSite(meta)
+  cache.set(meta.id, p)
+  p.catch(() => cache.delete(meta.id))
+  return p
 }
 
 export const frameUrl = (siteId: string, f: FrameRef, view: 'color' | 'gray') => url(`data/${siteId}/${view === 'color' ? f.file_color : f.file_gray}`)

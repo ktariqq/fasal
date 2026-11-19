@@ -8,8 +8,6 @@ import type { MapInfo, SiteBundle } from '../types/data'
 import Starfield from '../components/Starfield'
 import SwipeCompare from '../components/SwipeCompare'
 
-const SOURCES = ['Library of Congress', 'David Rumsey Map Collection', 'Wikimedia Commons', 'British Library']
-
 function Inner({ b }: { b: SiteBundle }) {
   const reduced = useStore((s) => s.reduced)
   const view = useStore((s) => s.view)
@@ -31,7 +29,6 @@ function Inner({ b }: { b: SiteBundle }) {
   }, [b.meta.id])
 
   const f = b.frames[fi]
-  const [W, S, E, N] = b.meta.bbox
 
   return (
     <div className="scene scroll mm nebula">
@@ -48,9 +45,9 @@ function Inner({ b }: { b: SiteBundle }) {
         <p className="mm-intro">Rivers on the Indus plain are known to change course over time. Swipe to compare an older map, as recorded then, with a radar view of the same ground.</p>
         {state === 'loading' && <p className="hud" role="status">Looking for the map...</p>}
         {state === 'missing' && (
-          <section className="mm-empty parchment" aria-label="Add a public-domain map">
-            <h2>Add a public-domain map</h2>
-            <p>No historical map is installed for this site yet.</p>          
+          <section className="mm-empty parchment" aria-label="No historical map">
+            <h2>No historical map yet</h2>
+            <p>No public-domain historical map is available for this site.</p>
           </section>
         )}
         {state === 'ok' && info && f && (
@@ -78,7 +75,7 @@ function Inner({ b }: { b: SiteBundle }) {
             </p>
           </section>
         )}
-        {state === 'ok' && !info && <p className="hud">A map file was found but maps.json has no entry for this site.</p>}
+        {state === 'ok' && !info && <p className="hud">A historical map is not available for this site.</p>}
       </main>
     </div>
   )

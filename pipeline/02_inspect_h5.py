@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""Print the HDF5 tree of a downloaded NISAR file, then candidate rasters and a SUGGESTED config.yaml h5 section."""
+"""Print the HDF5 tree of a NISAR file (local path or streamed https URL), then candidate rasters and a SUGGESTED config.yaml h5 section."""
 import argparse
 import re
+from pathlib import Path
 import h5py
 import numpy as np
+from h5util import open_h5
 
 COV = re.compile(r"^(HH|HV|VH|VV)\1$")
 
@@ -18,12 +20,12 @@ def short(v):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("file")
+    ap.add_argument("source", help="local .h5 path, or an https URL from the url column of out/granules_<site>.csv (needs Earthdata login)")
     ap.add_argument("--max-attrs", type=int, default=6, help="attributes shown per item (0 hides them)")
     ap.add_argument("--depth", type=int, default=None, help="deepest tree level to print")
     a = ap.parse_args()
     rasters, coords, proj = [], [], []
-    with h5py.File(a.file, "r") as h:
+    with open_h5(a.source if a.source.startswith("http") else Path(a.source)) as h:
         def visit(name, o):
             leaf, depth = name.split("/")[-1], name.count("/")
             if isinstance(o, h5py.Dataset):

@@ -14,7 +14,7 @@ def main():
     for site in load_sites(a.sites):
         d = PUB / site["id"]
         if not (d / "series.json").exists():
-            log.error("%s: series.json missing; run 04 (real) or 07 (demo) first", site["id"])
+            log.error("%s: series.json missing; run 05_extract.py (real) or 07_make_demo_data.py (demo) first", site["id"])
             continue
         se = read_json(d / "series.json")
         dates = [dt.date.fromisoformat(x) for x in se["dates"]]

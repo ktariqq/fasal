@@ -7,6 +7,7 @@ export type View = 'color' | 'gray'
 interface State {
   scene: Scene
   siteId: string | null
+  loadId: number
   bundle: SiteBundle | null
   bundleError: string | null
   idx: number
@@ -31,6 +32,7 @@ interface State {
 export const useStore = create<State>()((set) => ({
   scene: 'opening',
   siteId: null,
+  loadId: 0,
   bundle: null,
   bundleError: null,
   idx: 0,
@@ -41,7 +43,8 @@ export const useStore = create<State>()((set) => ({
   drawer: null,
   reduced: false,
   go: (scene) => set({ scene, playing: false, drawer: null }),
-  openSite: (id) => set({ siteId: id, scene: 'site', bundle: null, bundleError: null, idx: 0, playing: false, drawer: null }),
+  // loadId changes on every open, so reopening the same site reloads it
+  openSite: (id) => set((s) => ({ siteId: id, loadId: s.loadId + 1, scene: 'site', bundle: null, bundleError: null, idx: 0, playing: false, drawer: null })),
   setBundle: (bundle, err = null) => set({ bundle, bundleError: err, pol: bundle?.series.polarizations[0] ?? 'HH' }),
   setIdx: (idx) => set({ idx }),
   setPlaying: (playing) => set({ playing }),

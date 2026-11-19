@@ -1,8 +1,9 @@
-# FASAL pipeline configuration. Edit after running 03_inspect_h5.py.
+# FASAL pipeline configuration. Edit the h5 section after running 02_inspect_h5.py.
 analysis:
   prom: 2.0        # minimum peak prominence in dB
   min_dates: 15    # acquisitions required for a cropping-intensity estimate
   min_span: 365    # days the series must cover for that estimate
+  max_gap: 45      # longest allowed gap in days between acquisitions for that estimate
   abrupt: 3.0      # dB drop within two acquisitions counted as an abrupt fall
   onset: 1.0       # dB rise above the preceding minimum counted as a rise
   low_q: 0.25      # "low backscatter" = lowest quarter of the series range
@@ -10,15 +11,13 @@ search:
   dataset: NISAR
   processing_level: GCOV
   data_maturity: null   # PROVISIONAL, BETA, or null for all
-download:
-  max_total_gb: 20
 frames:
-  size: 768
+  size: 768        # side in pixels of the common site grid shared by cache, frames and basemap
   pol: HH
   p_low: 2
   p_high: 98
-# UNVERIFIED defaults: confirm every path with 03_inspect_h5.py before running 04.
-# Values are assumed to be linear power; 04 converts to dB with 10*log10.
+# UNVERIFIED defaults: confirm every path with 02_inspect_h5.py before running 03.
+# Values are assumed to be linear power; the pipeline converts to dB with 10*log10.
 h5:
   grid_group: /science/LSAR/GCOV/grids/frequencyA
   datasets: {HH: HHHH, HV: HVHV}

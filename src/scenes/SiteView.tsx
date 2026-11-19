@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { acqText, clamp, fmtDate, fmtDb } from '../lib/format'
 import type { Polygon } from 'geojson'
 import { useStore } from '../store/useStore'
-import { frameUrl } from '../lib/loadData'
+import { frameUrl, url } from '../lib/loadData'
 import { nearestEvent, nearestIndex } from '../lib/phenology'
 import { dbToHz, normDb, pulse, setActive, setTone, startAudio, toneWord } from '../lib/audio'
 import type { SiteBundle, SiteEvent, Story } from '../types/data'
@@ -17,15 +17,16 @@ import LimitsDrawer from '../components/LimitsDrawer'
 import FutureNisar from '../components/FutureNisar'
 import Gear from '../components/Gear'
 
+// frames can be transparent where the satellite pass missed the site, so the previous frame is dropped as soon as the new one has loaded
 function RadarFrame({ src, alt }: { src: string; alt: string }) {
   const [layers, setLayers] = useState<{ prev: string | null; cur: string }>({ prev: null, cur: src })
   const [broken, setBroken] = useState(false)
   useEffect(() => { setLayers((l) => (l.cur === src ? l : { prev: l.cur, cur: src })); setBroken(false) }, [src])
-  if (!src || broken) return <div className="fr-missing">Frame not found. Run the pipeline to generate frames.</div>
+  if (!src || broken) return <div className="fr-missing">Radar frame not available.</div>
   return (
     <>
       {layers.prev && <img className="fr fr-prev" src={layers.prev} alt="" aria-hidden="true" />}
-      <img key={layers.cur} className="fr fr-cur" src={layers.cur} alt={alt} decoding="async" onError={() => setBroken(true)} />
+      <img key={layers.cur} className="fr fr-cur" style={{ animation: 'none' }} src={layers.cur} alt={alt} decoding="async" onLoad={() => setLayers((l) => ({ ...l, prev: null }))} onError={() => setBroken(true)} />
     </>
   )
 }
@@ -63,6 +64,7 @@ function Inner({ b, stories }: { b: SiteBundle; stories: Story[] }) {
   const { setIdx, setPlaying, setPol, setView, setSound, setDrawer, go } = useStore.getState()
   const [pinned, setPinned] = useState<string | null>(null)
   const [outlines, setOutlines] = useState(true)
+  const [showMap, setShowMap] = useState(true)
   const [zoom, setZoom] = useState(1)
   const [pan, setPan] = useState({ x: 0, y: 0 })
   const [grab, setGrab] = useState(false)
@@ -89,6 +91,7 @@ function Inner({ b, stories }: { b: SiteBundle; stories: Story[] }) {
   const frameDates = useMemo(() => b.frames.map((f) => f.date), [b.frames])
   const fi = b.frames.length ? nearestIndex(frameDates, dates[i]) : -1
   const src = fi >= 0 ? frameUrl(b.meta.id, b.frames[fi], view) : ''
+  const cov = fi >= 0 ? b.frames[fi].coverage : undefined
 
   const scrub = (k: number) => { setPinned(null); setIdx(k) }
   const jump = (e: SiteEvent) => { setPinned(e.id); setIdx(nearestIndex(dates, e.date)) }
@@ -178,6 +181,7 @@ function Inner({ b, stories }: { b: SiteBundle; stories: Story[] }) {
               onPointerCancel={stop}
               onKeyDown={(e) => { const s = e.shiftKey ? 10 : 4; const m: Record<string, [number, number]> = { ArrowLeft: [s, 0], ArrowRight: [-s, 0], ArrowUp: [0, s], ArrowDown: [0, -s] }; if (zoom > 1 && m[e.key]) { e.preventDefault(); nudge(...m[e.key]) } }}
             >
+              {b.basemap && showMap && <img className="fr" src={url(`data/${b.meta.id}/basemap.jpg`)} alt="" aria-hidden="true" draggable={false} style={{ opacity: 0.55, filter: 'grayscale(0.4) brightness(0.8)' }} />}
               <RadarFrame src={src} alt={`${b.series.polarizations[0]} radar backscatter frame, ${fmtDate(dates[i])}. ${b.meta.data_mode === 'demo' ? 'Illustrative demo data.' : ''}`} />
               {outlines && <Fields b={b} />}
             </div>
@@ -202,10 +206,11 @@ function Inner({ b, stories }: { b: SiteBundle; stories: Story[] }) {
             </div>
 
             <button className="btn ghost" aria-pressed={outlines} onClick={() => setOutlines(!outlines)}>Field outlines</button>
+            {b.basemap && <button className="btn ghost" aria-pressed={showMap} onClick={() => setShowMap(!showMap)}>Basemap</button>}
           </div>
 
-          
-          <p className="hud caption">{fmtDate(dates[i])} | frame polarization {pols[0]} | {b.meta.sensor}</p>
+          <p className="hud caption">{fmtDate(dates[i])} | frame polarization {pols[0]} | {b.meta.sensor}{cov !== undefined && cov < 0.98 ? ` | radar coverage ${Math.round(cov * 100)}%` : ''}</p>
+          {b.basemap && showMap && <p className="hud caption" style={{ fontSize: 10, opacity: 0.8 }}>{b.basemap.attribution}</p>}
         </section>
 
         <section className="sv-right" aria-label="Rhythm chart">

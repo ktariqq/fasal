@@ -1,4 +1,4 @@
-"""HDF5 helpers shared by 04 and 05. Every path comes from config.yaml (h5 section); nothing is hard-wired."""
+"""HDF5 helpers: open a granule (streamed or local) and resample it onto the site grid. Every path comes from config.yaml (h5 section)."""
 import contextlib
 import functools
 import math
@@ -7,8 +7,8 @@ from pathlib import Path
 import h5py
 import numpy as np
 import pandas as pd
-from PIL import Image, ImageDraw
 from pyproj import Transformer
+from scipy.ndimage import map_coordinates
 from common import *
 
 
@@ -35,25 +35,12 @@ def granule_rows(site_id):
     return {r["file_name"]: r for r in pd.read_csv(f, dtype=str).fillna("").to_dict("records")} if f.exists() else {}
 
 
-def list_granules(site_id, direction=None, path=None):
-    # returns [(file, csv_row)] for downloaded files, optionally limited to one flight direction or track
-    rows, out = granule_rows(site_id), []
-    for f in sorted((OUT / "data" / site_id).glob("*.h5")):
-        r = rows.get(f.name, {})
-        if direction and r.get("flight_direction", "").upper() != direction.upper():
-            continue
-        if path and r.get("path_number", "") != str(path):
-            continue
-        out.append((f, r))
-    return out
-
-
 def granule_date(f, row):
     if row.get("date"):
         return dt.date.fromisoformat(row["date"])
     m = re.search(r"(20\d{2})(\d{2})(\d{2})T", f.name) or re.search(r"(20\d{2})(\d{2})(\d{2})", f.name)
     if not m:
-        raise ValueError("no acquisition date: add this file to out/granules_<site>.csv (columns date,file_name)")
+        raise ValueError("no acquisition date: add this file to out/granules_<site>.csv (columns date,file_name,url)")
     return dt.date(int(m[1]), int(m[2]), int(m[3]))
 
 
@@ -62,7 +49,7 @@ def read_epsg(h, hc):
         return int(hc["epsg_override"])
     g = h[hc["grid_group"]]
     if hc["epsg"] not in g:
-        raise KeyError(f"'{hc['epsg']}' not in {hc['grid_group']}; run 03_inspect_h5.py, fix h5.epsg, or set h5.epsg_override")
+        raise KeyError(f"'{hc['epsg']}' not in {hc['grid_group']}; run 02_inspect_h5.py, fix h5.epsg, or set h5.epsg_override")
     node = g[hc["epsg"]]
     vals = ([node[()]] if node.shape == () else []) + [node.attrs.get(k) for k in ("epsg", "EPSG", "epsg_code")]
     for v in vals:
@@ -76,7 +63,7 @@ def read_epsg(h, hc):
 
 def find_pols(h, hc):
     if hc["grid_group"] not in h:
-        raise KeyError(f"group {hc['grid_group']} not in file; run 03_inspect_h5.py and edit config.yaml")
+        raise KeyError(f"group {hc['grid_group']} not in file; run 02_inspect_h5.py and edit config.yaml")
     g = h[hc["grid_group"]]
     found = {p: n for p, n in hc["datasets"].items() if n in g}
     if not found:
@@ -117,16 +104,17 @@ def read_lin(h, hc, name, w):
     return a
 
 
-def poly_mask(ring, w):
-    X, Y = w["tr"].transform([p[0] for p in ring], [p[1] for p in ring])
-    pts = [((x - w["x0"]) / w["dx"] - w["c0"], (y - w["y0"]) / w["dy"] - w["r0"]) for x, y in zip(X, Y)]
-    m = Image.new("L", (w["c1"] - w["c0"], w["r1"] - w["r0"]), 0)
-    ImageDraw.Draw(m).polygon(pts, fill=255)
-    return np.array(m) > 0
-
-
-def field_db(a, mask, min_px):
-    # mean in linear power inside the polygon, then dB; None when too few valid pixels
-    v = a[mask]
-    v = v[np.isfinite(v)]
-    return None if v.size < min_px else float(10 * np.log10(v.mean()))
+def to_grid(h, hc, bbox, size):
+    # every polarization as dB on a fixed size x size lon/lat grid over bbox (north up); NaN wherever the granule has no data
+    w = window(h, hc, bbox)
+    if w is None:
+        return None
+    W, S, E, N = bbox
+    lon, lat = np.meshgrid(W + (np.arange(size) + 0.5) / size * (E - W), N - (np.arange(size) + 0.5) / size * (N - S))
+    X, Y = w["tr"].transform(lon.ravel(), lat.ravel())
+    rc = [((np.asarray(Y) - w["y0"]) / w["dy"] - w["r0"]).reshape(size, size), ((np.asarray(X) - w["x0"]) / w["dx"] - w["c0"]).reshape(size, size)]
+    out = {}
+    for pol, nm in find_pols(h, hc).items():
+        with np.errstate(all="ignore"):
+            out[pol] = (10 * np.log10(map_coordinates(read_lin(h, hc, nm, w), rc, order=1, mode="constant", cval=np.nan))).astype("float32")
+    return out

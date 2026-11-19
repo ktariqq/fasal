@@ -1,15 +1,16 @@
 {
  "cropping_intensity": {
-  "allowed": true,
-  "estimate": 1,
+  "allowed": false,
+  "estimate": null,
   "polarization": "HH",
-  "n_acquisitions": 19,
+  "n_acquisitions": 18,
   "span_days": 384,
+  "max_gap_days": 156,
   "peaks_in_window": [
    "2026-09-27"
   ],
-  "message": "1 prominent backscatter peak(s) in the first 365 days; consistent with 1 crop cycle(s) per year if each peak is a crop canopy. Estimate only: no ground truth, and edge effects are possible.",
-  "reason": ""
+  "message": "Insufficient dates for cropping-intensity estimate.",
+  "reason": "18 acquisitions spanning 384 days with a longest gap of 156 days; the rule needs at least 15 acquisitions covering at least 365 days with no gap longer than 45 days."
  },
  "gaps": [],
  "polarization": "HH",
@@ -17,9 +18,10 @@
   "prom": 2.0,
   "min_dates": 15,
   "min_span": 365,
+  "max_gap": 45,
   "abrupt": 3.0,
   "onset": 1.0,
   "low_q": 0.25
  },
- "n_acquisitions": 19
+ "n_acquisitions": 18
 }

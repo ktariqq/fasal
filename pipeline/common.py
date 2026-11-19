@@ -11,7 +11,7 @@ HERE = Path(__file__).resolve().parent
 PUB = HERE.parent / "public" / "data"
 OUT = HERE / "out"
 log = logging.getLogger("fasal")
-DEFAULTS = {"prom": 2.0, "min_dates": 20, "min_span": 365, "abrupt": 3.0, "onset": 1.0, "low_q": 0.25}
+DEFAULTS = {"prom": 2.0, "min_dates": 20, "min_span": 365, "max_gap": 45, "abrupt": 3.0, "onset": 1.0, "low_q": 0.25}
 STOPS = [(0, (11, 5, 20)), (96, (61, 31, 92)), (170, (102, 51, 153)), (230, (200, 178, 232)), (255, (233, 222, 250))]
 
 
@@ -41,13 +41,23 @@ def load_sites(only=None):
     return [s for s in read_json(HERE / "sites.json") if not only or s["id"] in only]
 
 
+def inside(ring, bbox):
+    W, S, E, N = bbox
+    return all(W <= x <= E and S <= y <= N for x, y in ring)
+
+
 def get_fields(site):
-    # prefers a hand-edited pipeline/fields/<site>.geojson over the starter rings in sites.json
+    # prefers pipeline/fields/<site>.geojson over the starter rings in sites.json; rings outside the site box are dropped
     f = HERE / "fields" / f'{site["id"]}.geojson'
     if not f.exists():
         return site["fields"]
-    feats = read_json(f)["features"]
-    return [{"id": ft["properties"].get("id", f'{site["id"][0].upper()}{i + 1}'), "ring": ft["geometry"]["coordinates"][0]} for i, ft in enumerate(feats)]
+    fl = [{"id": ft["properties"].get("id") or f'{site["id"][0].upper()}{i + 1}', "ring": ft["geometry"]["coordinates"][0]} for i, ft in enumerate(read_json(f)["features"])]
+    good = [x for x in fl if inside(x["ring"], site["bbox"])]
+    if len(good) < len(fl):
+        log.warning("%s: %d of %d polygons in %s lie outside the site box and were ignored", site["id"], len(fl) - len(good), len(fl), f.name)
+    if not good:
+        log.warning("%s: no usable polygons in %s; using the starter rings from sites.json", site["id"], f.name)
+    return good or site["fields"]
 
 
 def fields_geojson(site):
@@ -73,14 +83,17 @@ def stretch(db, lo, hi):
     return np.clip((db - lo) / (hi - lo), 0, 1)
 
 
-def save_frame(u8, color_path, gray_path):
-    # gray = science view; color = dark-violet-to-lavender ramp stored as a palette PNG (small files)
+def save_frame(u8, color_path, gray_path, valid=None):
+    # gray = science view; color = violet ramp as a palette PNG; with `valid`, pixels outside it turn transparent (value 0 is reserved)
     for p in (color_path, gray_path):
         Path(p).parent.mkdir(parents=True, exist_ok=True)
-    Image.fromarray(u8).save(gray_path, optimize=True)
+    kw = {}
+    if valid is not None:
+        u8, kw = np.where(valid, np.maximum(u8, 1), 0).astype(np.uint8), {"transparency": 0}
+    Image.fromarray(u8).save(gray_path, optimize=True, **kw)
     im = Image.frombytes("P", (u8.shape[1], u8.shape[0]), u8.tobytes())
     im.putpalette(purple_palette())
-    im.save(color_path, optimize=True)
+    im.save(color_path, optimize=True, **kw)
 
 
 def stamp_demo(arr, text="ILLUSTRATIVE DEMO DATA"):
@@ -133,14 +146,15 @@ def build_events(site, dates, med, pol=None, cfg=None):
     peak      : prominent local maximum (`prom` dB)                              -> consistent with a developed canopy
     fall      : drop of `abrupt` dB within two acquisitions after a peak         -> consistent with harvest or clearing
     gap       : days from a fall to the next rise                                -> harvest-to-sowing hypothesis
-    cropping-intensity: prominent peaks in the first 365 days, only if enough dates span a full year."""
+    cropping-intensity: prominent peaks in the first 365 days, only if enough dates span a full year with no long hole."""
     p = {**DEFAULTS, **(cfg or {})}
     n = len(dates)
     span = (dates[-1] - dates[0]).days if n > 1 else 0
+    hole = max((b - a).days for a, b in zip(dates, dates[1:])) if n > 1 else 0
     pol = pol or ("HH" if "HH" in med else next(iter(med)))
-    ok = n >= p["min_dates"] and span >= p["min_span"]
-    ci = {"allowed": ok, "estimate": None, "polarization": pol, "n_acquisitions": n, "span_days": span, "peaks_in_window": [], "message": "Insufficient dates for cropping-intensity estimate.",
-          "reason": f"{n} acquisitions spanning {span} days; the rule needs at least {p['min_dates']} acquisitions covering at least {p['min_span']} days."}
+    ok = n >= p["min_dates"] and span >= p["min_span"] and hole <= p["max_gap"]
+    ci = {"allowed": ok, "estimate": None, "polarization": pol, "n_acquisitions": n, "span_days": span, "max_gap_days": hole, "peaks_in_window": [], "message": "Insufficient dates for cropping-intensity estimate.",
+          "reason": f"{n} acquisitions spanning {span} days with a longest gap of {hole} days; the rule needs at least {p['min_dates']} acquisitions covering at least {p['min_span']} days with no gap longer than {p['max_gap']} days."}
     sig, gaps = [], []
 
     def ev(kind, i, label, desc, conf, cit=False):

@@ -46,9 +46,10 @@ export interface SiteEvent {
   citation_needed: boolean
 }
 
-export interface FrameRef { date: string; file_color: string; file_gray: string }
+export interface FrameRef { date: string; file_color: string; file_gray: string; coverage?: number }
 export interface Story { id: string; site_id: string; title: string; author: string; year: string; paraphrase: string; landscape_link: string; source: string }
 export interface MapInfo { site_id: string; file: string; title: string; year: number | null; source_url: string; license: string; verified: boolean }
+export interface BasemapInfo { attribution: string; tiles?: string; zoom?: number }
 
 export interface CroppingIntensity {
   allowed: boolean
@@ -56,6 +57,7 @@ export interface CroppingIntensity {
   polarization: string
   n_acquisitions: number
   span_days: number
+  max_gap_days?: number
   peaks_in_window: string[]
   message: string
   reason: string
@@ -71,4 +73,5 @@ export interface SiteBundle {
   frames: FrameRef[]
   analysis: Analysis | null
   fields: FeatureCollection | null
+  basemap: BasemapInfo | null
 }
