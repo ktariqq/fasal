@@ -121,7 +121,7 @@ Backscatter is read per polarization in dB. For each sample polygon the pipeline
 | Abrupt fall | Drop of 3 dB or more within two acquisitions after a peak | Consistent with harvest or field clearing |
 | Fall-to-rise gap | Days from a fall to the next rise | Possible harvest-to-sowing turnaround; agronomic framing is `CITATION_NEEDED` |
 
-**Cropping intensity** counts prominent peaks in the first 365 days, and **only** when the series has at least 15 acquisitions covering at least 365 days with no gap longer than 45 days. Otherwise the app and the Field Record state "Insufficient dates for cropping-intensity estimate."
+**Cropping intensity** counts prominent peaks in the first 365 days, and **only** when the series has at least 20 acquisitions covering at least 365 days with no gap longer than 45 days. Otherwise the app and the Field Record state "Insufficient dates for cropping-intensity estimate."
 
 **Field polygons** are found by blurring each date to reduce speckle, normalising each date over space, reducing the time series to its main components and segmenting it into compact regions. Regions are kept when they are field-sized, convex, homogeneous and show a seasonal swing, then spread across the site. They are homogeneous radar patches, not surveyed boundaries.
 

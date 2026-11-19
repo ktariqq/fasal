@@ -140,16 +140,19 @@ function Inner({ b, stories }: { b: SiteBundle; stories: Story[] }) {
       <Starfield reduced={reduced} />
       <header className="sv-top">
         <div className="sv-title">
+          <button className="crumb" onClick={() => go('atlas')} aria-label="Back to the Atlas">‹ Atlas</button>
           <h1>{b.meta.name}</h1>
           <span className="ur" lang="ur" dir="rtl">{b.meta.name_ur}</span>
         </div>
         <nav className="sv-nav" aria-label="Site tools">
-          <button className="btn ghost" onClick={() => go('atlas')}>Atlas</button>
           <button className="btn" onClick={() => go('map')}>Map Memory</button>
           <button className="btn" onClick={() => go('record')}>Field Record</button>
-          <button className="btn ghost" aria-pressed={drawer === 'how'} onClick={() => setDrawer(drawer === 'how' ? null : 'how')}>How to read</button>
-          <button className="btn ghost" aria-pressed={drawer === 'limits'} onClick={() => setDrawer(drawer === 'limits' ? null : 'limits')}>Limits</button>
-          <button className="btn ghost" aria-pressed={drawer === 'future'} onClick={() => setDrawer(drawer === 'future' ? null : 'future')}>Future</button>
+          <span className="sv-sep" aria-hidden="true" />
+          <div className="seg" role="group" aria-label="Guide">
+            {([['how', 'How to read'], ['limits', 'Limits'], ['future', 'Future']] as const).map(([k, t]) => (
+              <button key={k} aria-pressed={drawer === k} onClick={() => setDrawer(drawer === k ? null : k)}>{t}</button>
+            ))}
+          </div>
         </nav>
       </header>
 
@@ -209,8 +212,6 @@ function Inner({ b, stories }: { b: SiteBundle; stories: Story[] }) {
             {b.basemap && <button className="btn ghost" aria-pressed={showMap} onClick={() => setShowMap(!showMap)}>Basemap</button>}
           </div>
 
-          <p className="hud caption">{fmtDate(dates[i])} | frame polarization {pols[0]} | {b.meta.sensor}{cov !== undefined && cov < 0.98 ? ` | radar coverage ${Math.round(cov * 100)}%` : ''}</p>
-          {b.basemap && showMap && <p className="hud caption" style={{ fontSize: 10, opacity: 0.8 }}>{b.basemap.attribution}</p>}
         </section>
 
         <section className="sv-right" aria-label="Rhythm chart">
@@ -219,6 +220,7 @@ function Inner({ b, stories }: { b: SiteBundle; stories: Story[] }) {
             <div className="g-row"><span>{pol} MEDIAN</span><strong>{fmtDb(value)}</strong></div>
             <div className="g-row"><span>MIDDLE HALF</span><strong>{st.q25[i].toFixed(1)} to {st.q75[i].toFixed(1)} dB</strong></div>
             <div className="g-row"><span>TONE</span><strong>Current tone: {toneWord(hz)}, ~{Math.round(hz)} Hz{sound ? '' : ' (sound off)'}</strong></div>
+            <div className="g-row"><span>FRAME</span><strong>{pols[0]}{cov !== undefined && cov < 0.98 ? `, ${Math.round(cov * 100)}% coverage` : ''}</strong></div>
           </div>
           <h2 className="chart-title">Backscatter (dB)</h2>
           <RhythmChart series={b.series} pol={pol} events={events} idx={i} onPick={scrub} height={250} />
@@ -234,6 +236,7 @@ function Inner({ b, stories }: { b: SiteBundle; stories: Story[] }) {
           </div>
           <p className="note"><strong>{acqText(b.series.n_acquisitions)} available.</strong> {ci ? <><strong>Cropping intensity:</strong> {ci.message}</> : 'Analysis file not available.'}</p>
           {ci && ci.reason && <p className="note small">{ci.reason}</p>}
+          {b.basemap && showMap && <p className="note small">{b.basemap.attribution}</p>}
         </section>
       </main>
 

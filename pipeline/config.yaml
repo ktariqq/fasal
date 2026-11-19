@@ -1,7 +1,7 @@
 # FASAL pipeline configuration. Edit the h5 section after running 02_inspect_h5.py.
 analysis:
   prom: 2.0        # minimum peak prominence in dB
-  min_dates: 15    # acquisitions required for a cropping-intensity estimate
+  min_dates: 20    # acquisitions required for a cropping-intensity estimate
   min_span: 365    # days the series must cover for that estimate
   max_gap: 45      # longest allowed gap in days between acquisitions for that estimate
   abrupt: 3.0      # dB drop within two acquisitions counted as an abrupt fall

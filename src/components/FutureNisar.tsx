@@ -1,14 +1,23 @@
 import Sheet from './Sheet'
 
-
 export default function FutureNisar({ open, onClose }: { open: boolean; onClose: () => void }) {
   return (
     <Sheet open={open} title="Future of NISAR + FASAL" onClose={onClose}>
-      <p><em>A future direction, not a finished service.</em></p>
-      <p>NISAR is an L-band radar mission built to image land repeatedly. With enough acquisitions over a full growing year, a record like this one could show when fields flood, grow and are cleared.</p>
-      <p>Smallholder communities and extension services could keep a simple Field Record per site, a dated rhythm to compare from one year to the next. FASAL demonstrates the idea; it has not been validated as a service.</p>
-      <p>Food-security monitoring would need ground truth, crop-type labels and agronomic review before any statistic could be claimed. FASAL makes no such claim.</p>
-      <p>Natural next steps: more sites and years, comparison with field observations, and a closer look at which polarizations best separate flooding, growth and harvest.</p>  
+      <p><em>A direction, not a finished service.</em></p>
+      <h3>The idea</h3>
+      <p>NISAR images the same land again and again. Over a full growing year, that record could show when fields flood, grow and are cleared. A community or extension service could keep a one-page Field Record per site and compare it from year to year.</p>
+      <h3>What it still needs</h3>
+      <ul>
+        <li>A full year of regular passes</li>
+        <li>Checks against real field observations</li>
+        <li>Crop-type labels and expert review</li>
+      </ul>
+      <h3>Next steps</h3>
+      <ul>
+        <li>More sites and more years</li>
+        <li>Comparison with ground observations</li>
+        <li>Finding which radar setting best separates flooding, growth and harvest</li>
+      </ul>
     </Sheet>
   )
 }

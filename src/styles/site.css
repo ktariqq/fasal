@@ -4,12 +4,20 @@
 .sv-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; padding: 6px 16px 2px; }
 .sv-title h1 { font-size: clamp(16px, 2.2vw, 24px); letter-spacing: 0.12em; color: var(--mist); text-shadow: var(--glow); }
 .sv-title .ur { font-family: var(--f-ur); font-size: 18px; line-height: 1.8; color: var(--lavender); }
-.sv-nav { display: flex; flex-wrap: wrap; gap: 8px; }
 .sv-grid { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(220px, 21%) minmax(0, 1fr) minmax(280px, 27%); gap: 14px; padding: 6px 16px 4px; }
 .sv-left { min-height: 0; display: flex; flex-direction: column; border: 1px solid var(--brass-dim); border-radius: 4px; box-shadow: 0 10px 36px rgba(0, 0, 0, 0.55); }
 .scroll-in { flex: 1; min-height: 0; overflow: auto; padding: 18px 20px; }
-.sv-center { min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
+.sv-center { min-height: 0; overflow-y: auto; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 10px; padding: 4px 4px 12px; }
 .sv-right { min-height: 0; overflow: auto; padding-right: 4px; }
+.sv-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.sv-sep { width: 1px; height: 22px; background: var(--brass-dim); margin: 0 4px; }
+.crumb { display: block; padding: 0; background: none; border: 0; font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--lavender); }
+.crumb:hover { color: var(--mist); }
+.seg { display: inline-flex; border: 1px solid var(--amethyst); border-radius: 6px; overflow: hidden; }
+.seg button { padding: 0.45em 0.8em; background: transparent; border: 0; border-right: 1px solid var(--amethyst); font-family: var(--f-cinzel); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--lavender); }
+.seg button:last-child { border-right: 0; }
+.seg button:hover { background: rgba(139, 95, 191, 0.25); }
+.seg button[aria-pressed='true'] { background: var(--amethyst); color: var(--void); }
 
 /* cards on parchment */
 .card h2 { font-size: 20px; letter-spacing: 0.04em; color: var(--rebecca-deep); }
@@ -32,7 +40,7 @@
 .chip.warn { background: var(--brass); color: var(--ink); border-color: var(--ink); }
 
 /* radar dial */
-.dial { position: relative; width: clamp(240px, min(100%, calc(100vh - 300px)), 820px); aspect-ratio: 1; flex: none; }.dial-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; filter: drop-shadow(0 0 14px rgba(102, 51, 153, 0.7)); }
+.dial { position: relative; width: clamp(240px, min(100%, calc(100vh - 340px)), 820px); aspect-ratio: 1; flex: none; }.dial-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; filter: drop-shadow(0 0 14px rgba(102, 51, 153, 0.7)); }
 .dial-glass { position: absolute; inset: 4%; border-radius: 50%; overflow: hidden; background: #000; box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8); }
 .dial-grid { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.6; }
 .fr { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
@@ -88,6 +96,7 @@
   .sv { overflow: auto; }
   .sv-grid { display: flex; flex-direction: column; flex: none; }
   .sv-center { order: 1; }
+  .sv-center { overflow: visible; }
   .sv-right { order: 2; overflow: visible; }
   .sv-left { order: 3; min-height: 280px; }
   .scroll-in { overflow: visible; }
