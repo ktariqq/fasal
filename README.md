@@ -17,8 +17,9 @@
 
 **[Live Application](https://fasal-nasa-spaceapps.netlify.app/) · [Pipeline Guide](pipeline/00_README.md) · [References](REFERENCES.md) · [Report a bug](../../issues)**
 
-━━━━━━━━━━━━━━━━━━━━ ✦ ━━━━━━━━━━━━━━━━━━━━
 <img src="assets/opening.jpg" alt="FASAL opening scene">
+
+━━━━━━━━━━━━━━━━━━━━ ✦ ━━━━━━━━━━━━━━━━━━━━
 
 </div>
 
@@ -47,7 +48,7 @@ Built solo by **Team Sitaara** for the 2026 NASA Space Apps Challenge, **"Dancin
 
 <br/>
 
-<div align="center"><img src="assets/site-view.jpg" width="1000" alt="FASAL site view: radar porthole, rhythm chart, story card and time scrubber"></div>
+<div align="center"><img src="assets/siteview-colour.jpg" alt="FASAL site view: radar porthole, rhythm chart, story card and time scrubber"></div>
 
 <br/>
 
@@ -87,6 +88,8 @@ Built solo by **Team Sitaara** for the 2026 NASA Space Apps Challenge, **"Dancin
 | **Larkana and Mohenjo-daro**, Sindh | Irrigated rice on the Indus | Sassui and Punhun (Bhittai) | Sindhi Culture Day | Shifting-river history; Map Memory site |
 | **Tharparkar**, Sindh | Rain-fed desert farming | Umar and Marvi (Bhittai) | Sindhi Culture Day | Monsoon-dependent contrast |
 
+<img src="assets/atlas.jpg" alt="Atlas">
+
 
 <br/>
 
@@ -101,11 +104,11 @@ Built solo by **Team Sitaara** for the 2026 NASA Space Apps Challenge, **"Dancin
 | **Field Record** | One-page, print-ready summary: chart, detected signals, cultural calendar, cropping-intensity result or "insufficient dates", limits and credits |
 | **Drawers** | "How to read this", "Limits" and "Future of NISAR + FASAL" |
 
-<div align="center">
 
-<img src="assets/field-record.jpg" alt="FASAL">
-
-</div>
+<p align="center">
+  <img src="assets/map-memory.jpg" alt="Map Memory" width="48%">
+  <img src="assets/field-record.jpg" alt="Field Record" width="48%">
+</p>
 
 <br/>
 
@@ -234,6 +237,11 @@ python pipeline/09_make_basemap.py --sites punjab
 python pipeline/08_build_manifest.py
 ```
 Granules are streamed, never stored whole. If few acquisitions exist, the app says "N acquisitions available" and omits cropping intensity. Full steps, authentication and a manual fallback are in [`pipeline/00_README.md`](pipeline/00_README.md). A site becomes REAL only when its `series.json` says `"data_mode": "real"`.
+
+<p align="center">
+  <img src="assets/2026-08-10_color.png" width="48%">
+  <img src="assets/2026-07-17.png" width="48%">
+</p>
 
 <br/>
 
